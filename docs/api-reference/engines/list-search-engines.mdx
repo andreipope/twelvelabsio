@@ -1,0 +1,25 @@
+---
+title: "List Search Engines"
+description: "List the search engines that are available in your account."
+api: "GET https://api.twelvelabs.io/v1/engines"
+---
+
+### Parameters
+
+<ParamField body="x-api-key" required>
+  Your API key. You can find your API key on the
+  [Dashboard](https://auth.twelvelabs.io/login?state=hKFo2SBXLXk0QmZHMTVqOGJkM29zdzFRdUk4YWhsYWhwYUd6NKFupWxvZ2luo3RpZNkgTmN2QjIzYVJGU1AzZ1cxeklQclNmNUFxLWZrXzRlY1KjY2lk2SBpbHpmWmhmY1czcnhMenlwa0t6bU9hZER6VEdZTmp5QQ&client=ilzfZhfcW3rxLzypkKzmOadDzTGYNjyA&protocol=oauth2&prompt=select_account&onredirectcallback=e%3D%3E%7Bodt.replace((e%3D%3Dnull%3Fvoid%200%3Ae.returnTo)%7C%7Cwindow.location.pathname)%7D&audience=https%3A%2F%2Ftwelvelabs.us.auth0.com%2Fapi%2Fv2%2F&scope=openid%20read%3Acurrent_user%20https%3A%2F%2Ftwelvelabs.io%2Fmetadata%20profile%20email%20offline_access&redirect_uri=https%3A%2F%2Fapi.twelvelabs.io&response_type=code&response_mode=query&nonce=Zy5nZGhXRjhJc0RnVE5OZGhTdkdNWEQ2VVdkWWpKQXhfdDU3NXp3enltRA%3D%3D&code_challenge=5UITZKOlQG1dN3gus6o6fErmLTs1yU_sEOf7kBtmSfc&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMS45LjAifQ%3D%3D)
+  page
+</ParamField>
+
+<ParamField body="string" type="" required>
+  Must be set to `application/json`.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format. It contains the following fields:
+
+- `data`: An array that contains the engines.
+
+- `type`: Describes the type of operation (`engine_list`).
