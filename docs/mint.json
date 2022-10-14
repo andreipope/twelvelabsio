@@ -2,7 +2,7 @@
   "name": "Twelve Labs",
   "navigation": [
     {
-      "group": "",
+      "group": "Welcome",
       "pages": ["introduction", "understand", "quickstart"]
     },
     {
@@ -88,13 +88,29 @@
         }
       ]
     },
-
     {
       "group": "API Reference",
       "pages": [
         "api-reference",
-        "api-reference/engines",
-        "api-reference/indexes",
+        {
+          "group": "Engines",
+          "pages": [
+            "api-reference/engines/engines",
+            "api-reference/engines/list-search-engines",
+            "api-reference/engines/retrieve-search-engine"
+          ]
+        },
+        {
+          "group": "Indexes",
+          "pages": [
+            "api-reference/indexes/indexes",
+            "api-reference/indexes/create-index",
+            "api-reference/indexes/list-index",
+            "api-reference/indexes/retrieve-index",
+            "api-reference/indexes/update-index",
+            "api-reference/indexes/delete-index"
+          ]
+        },
         "api-reference/indexes-tasks",
         "api-reference/indexes-tasks-transfers",
         "api-reference/indexes-videos",
