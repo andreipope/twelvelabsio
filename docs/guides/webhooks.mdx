@@ -1,0 +1,20 @@
+---
+title: "Webhooks"
+---
+
+A webhook allows your application to receive real-time HTTP notifications for events. Currently, this functionality is available for the following events:
+
+* A video indexing task has finished indexing is ready to be searched.
+
+* A video indexing task has failed.
+
+## Use Webhooks to Receive Notifications
+
+To receive event notifications for events in your application, use the steps in this section:
+
+1\. **Create an HTTP endpoint in your application**. The API service sends notifications to your endpoint as POST requests with a JSON payload. For details about the schema, see the [Notification Schema](/guides/webhooks/notification-schema) section.
+
+2\. **Register your webhook**. Once you've created an HTTP endpoint in your application, you must go to the **Dashboard** page and register your webhook in the **Settings** \> **Webhooks** section. For instructions, see the[ Register a webhook](/guides/webhooks/manage-webhooks#register-a-webhook) section.
+
+3\. **Handle requests**. Ensure that your application meets the [requirements for processing notifications](/guides/webhooks/requirements-for-processing-notifications).
+
