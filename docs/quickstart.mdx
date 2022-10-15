@@ -2,678 +2,734 @@
 title: "Quickstart"
 ---
 
-This guide demonstrates how to build a production-ready search service by using a three-step process:
+This guide demonstrates how to build a production-ready search service by using
+a three-step process:
 
-1. 1.  
-[Create an index](/quickstart#create-an-index)
+1. [Create an index](/quickstart#create-an-index)
 
-2. 2.  
-[Upload a video](/quickstart#upload-a-video)
+2. [Upload a video](/quickstart#upload-a-video)
 
-3. 3.  
-[Make a search request](/quickstart#make-a-search-request)
+3. [Make a search request](/quickstart#make-a-search-request)
 
 Note that each step is composed of a single API call.
 
-This guide shows how to build an application that calls the Twelve Labs API using [Python](https://www.python.org) and [Node.js](https://nodejs.org/en/). However, note that the API is compatible with most programming languages, and you can also use [Postman](https://www.postman.com) or other REST clients to send requests and view responses.
+This guide shows how to build an application that calls the Twelve Labs API
+using [Python](https://www.python.org) and [Node.js](https://nodejs.org/en/).
+However, note that the API is compatible with most programming languages, and
+you can also use [Postman](https://www.postman.com) or other REST clients to
+send requests and view responses.
 
 ## Prerequisites
 
-* A valid Twelve Labs account. To create an account, go to the [Get Started](https://api.twelvelabs.io) page, select **Sign Up**, and follow the instructions.
+- A valid Twelve Labs account. To create an account, go to the
+  [Get Started](https://api.twelvelabs.io) page, select **Sign Up**, and follow
+  the instructions.
 
-* This guide assumes you're familiar with the concepts that are described on the [Understand](/understand) page.
+- This guide assumes you're familiar with the concepts that are described on the
+  [Understand](/understand) page.
 
-* Your video must meet the following requirements:  
-   * **Video resolution:** must be greater or equal than 360p and less than 1080p (FHD)  
-   * **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require different options, send us an email at support\[at\]twelvelabs.io.
+- Your video must meet the following requirements:
+  - **Video resolution:** must be greater or equal than 360p and less than 1080p
+    (FHD)
+  - **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require
+    different options, send us an email at support\[at\]twelvelabs.io.
 
 ## Recommendations
 
-* For consistent search results, Twelve Labs recommends you upload 360p videos.
+- For consistent search results, Twelve Labs recommends you upload 360p videos.
 
-* To make calls to the API, you must include your secret key, and specify the URL of the API. Twelve Labs recommends you use environment variables to pass configuration to your application. To retrieve your API key, go to the [Dashboard](https://api.twelvelabs.io/dashboard) page and select the copy button under the **API Key** section:
+- To make calls to the API, you must include your secret key, and specify the
+  URL of the API. Twelve Labs recommends you use environment variables to pass
+  configuration to your application. To retrieve your API key, go to the
+  [Dashboard](https://api.twelvelabs.io/dashboard) page and select the copy
+  button under the **API Key** section:
 
 ![](/images/dashboard-select-copy.png)
 
-Then, enter the following commands, replacing the placeholder surrounded by `<>` with your API key:
+Then, enter the following commands, replacing the placeholder surrounded by `<>`
+with your API key:
 
-export API\_KEY\=<YOUR\_API\_KEY\>
-
-export API\_URL\=https://api.twelvelabs.io/v1
+```
+export API_KEY=<YOUR_API_KEY>
+export API_URL=https://api.twelvelabs.io/v1
+```
 
 ## Create an Index
 
-1\. In a new directory, install the required packages:
+1. In a new directory, install the required packages:
 
-Python
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Node.js
-
+```
 python -m pip install requests pprint
-
 npm install axios form-data
+```
 
-2\. In a new source file, add the following statements to import the required packages and retrieve the values of the environment variables you've set in the previous section:
+  </Accordion>
+  <Accordion title="Node.js">
 
-Python
+```
+python -m pip install requests pprint
+npm install axios form-data
+```
 
-Node.js
+  </Accordion>
+</AccordionGroup>
 
+2. In a new source file, add the following statements to import the required
+   packages and retrieve the values of the environment variables you've set in
+   the previous section:
+
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
+
+```
 import requests
-
 import glob
-
 from pprint import pprint
-
 import os
 
+API_URL = os.getenv("API_URL")
+assert API_URL
+API_KEY = os.getenv("API_KEY")
+assert API_KEY
+```
 
-API\_URL \= os.getenv("API\_URL")
+  </Accordion>
+  <Accordion title="Node.js">
 
-assert API\_URL
+```
+(async () => {
+  const FormData = require('form-data')
+  const axios = require('axios');
+  const fs = require('fs')
 
-API\_KEY \= os.getenv("API\_KEY")
-
-assert API\_KEY
-
-(async () \=> {
-
-const FormData \= require('form-data')
-
-const axios \= require('axios');
-
-const fs \= require('fs')
-
-const API\_URL \= process.env.API\_URL
-
-if (typeof API\_URL \=== 'undefined') {
-
- console.log('API\_URL is not defined.')
-
- process.exit(1)
-
-}
-
-const API\_KEY \= process.env.API\_KEY
-
-if (typeof API\_KEY \=== 'undefined') {
-
- console.log('API\_KEY is not defined.')
-
- process.exit(1)
-
-}
-
+  const API_URL = process.env.API_URL
+  if (typeof API_URL === 'undefined') {
+    console.log('API_URL is not defined.')
+    process.exit(1)
+  }
+  const API_KEY = process.env.API_KEY
+  if (typeof API_KEY === 'undefined') {
+    console.log('API_KEY is not defined.')
+    process.exit(1)
+  }
 })()
+```
 
-3\. Specify the name of your index. Make sure to replace the placeholder surrounded by `<>` with the name you want to use for your index:
+  </Accordion>
+</AccordionGroup>
 
-Python
+3. Specify the name of your index. Make sure to replace the placeholder
+   surrounded by `<>` with the name you want to use for your index:
 
-Node.js
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-INDEX\_NAME \= "<YOUR\_INDEX\_NAME>" \# Use a descriptive name for your index 
+```
+INDEX_NAME = "<YOUR_INDEX_NAME>" # Use a descriptive name for your index
+const INDEX_NAME = '<YOUR_INDEX_NAME>' // Use a descriptive name for your index
+```
 
-const INDEX\_NAME \= '<YOUR\_INDEX\_NAME>' // Use a descriptive name for your index 
+  </Accordion>
+  <Accordion title="Node.js">
 
-4\. Declare the `indexes` endpoint:
+```
+const INDEX_NAME = '<YOUR_INDEX_NAME>' // Use a descriptive name for your index
+```
 
-Python
+  </Accordion>
+</AccordionGroup>
 
-Node.js
+4. Declare the `indexes` endpoint:
 
-INDEXES\_URL \= f"{API\_URL}/indexes"
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-const INDEXES\_URL \= \`${API\_URL}/indexes\`
+```
+INDEXES_URL = f"{API_URL}/indexes"
+const INDEXES_URL = `${API_URL}/indexes`
+```
 
-5\. Your API key is passed in the `headers` dictionary and the parameters for creating a new index are passed in the `data` dictionary:
+  </Accordion>
+  <Accordion title="Node.js">
 
-Python
+```
+INDEXES_URL = f"{API_URL}/indexes"
+const INDEXES_URL = `${API_URL}/indexes`
+```
 
-Node.js
+  </Accordion>
+</AccordionGroup>
 
-headers \= {
+5. Your API key is passed in the `headers` dictionary and the parameters for
+   creating a new index are passed in the `data` dictionary:
 
-"x-api-key": API\_KEY
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
+```
+headers = {
+    "x-api-key": API_KEY
 }
 
+data = {
+    "engine_id": "marengo2",
+    "index_options": ["visual", "conversation", "text_in_video"],
+    "index_name": INDEX_NAME,
+}
+```
 
-data \= {
+  </Accordion>
+  <Accordion title="Node.js">
 
-"engine\_id": "marengo2",
-
-"index\_options": \["visual", "conversation", "text\_in\_video"\],
-
-"index\_name": INDEX\_NAME,
-
+```
+const headers = {
+    'x-api-key': API_KEY,
 }
 
-const headers \= {
-
-'x-api-key': API\_KEY,
-
-}
-
-
-let data \= JSON.stringify({
-
-"engine\_id": "marengo2",
-
-"index\_options": \["visual", "conversation", "text\_in\_video"\],
-
-"index\_name": INDEX\_NAME
-
+let data = JSON.stringify({
+    "engine_id": "marengo2",
+    "index_options": ["visual", "conversation", "text_in_video"],
+    "index_name": INDEX_NAME
 })
+```
+
+  </Accordion>
+</AccordionGroup>
+
+<Note>
 
 Note the following about this code:
 
-* Line 6 specifies that the AI-powered search engine is `marengo2`. For details about search engines, see the [Search Engines](/concepts/search-engines) section.
+- Line 6 specifies that the AI-powered search engine is `marengo2`. For details
+  about search engines, see the [Search Engines](/concepts/search-engines)
+  section.
 
-* Line 7 specifies the indexing options. An indexing option specifies a source of information that the AI-powered search engine indexes and uses when performing searches. In this example, the API service will index `visual`, `conversation`, and `text_in_video `information. For more details, see the [Indexing Options](/concepts/indexing-options) page.
+- Line 7 specifies the indexing options. An indexing option specifies a source
+  of information that the AI-powered search engine indexes and uses when
+  performing searches. In this example, the API service will index `visual`,
+  `conversation`, and `text_in_video `information. For more details, see the
+  [Indexing Options](/concepts/indexing-options) page.
 
-6\. Create an index. Call the API by invoking the [indexes endpoint](/reference/api-reference/indexes#create-index) and store the result in a variable named `response`:
+</Note>
 
-Python
+6. Create an index. Call the API by invoking the
+   [indexes endpoint](/reference/api-reference/indexes#create-index) and store
+   the result in a variable named `response`:
 
-Node.js
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-response \= requests.post(INDEXES\_URL, headers\=headers, json\=data)
+```
+response = requests.post(INDEXES_URL, headers=headers, json=data)
+```
 
-let config \= {
+  </Accordion>
+  <Accordion title="Node.js">
 
-method: 'post',
-
-url: INDEXES\_URL,
-
-headers: headers,
-
-data : data
-
+```
+let config = {
+    method: 'post',
+    url: INDEXES_URL,
+    headers: headers,
+    data : data
 }
+let resp = await axios(config)
+let response = await resp.data
+```
 
-let resp \= await axios(config)
+  </Accordion>
+</AccordionGroup>
 
-let response \= await resp.data
+7. Store the ID of your index in a variable named `INDEX_ID` and print the
+   status code and response:
 
-7\. Store the ID of your index in a variable named `INDEX_ID` and print the status code and response:
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Python
-
-Node.js
-
-INDEX\_ID \= response.json().get("\_id")
-
-print (f"Status code: {response.status\_code}")
-
+```
+INDEX_ID = response.json().get("_id")
+print (f"Status code: {response.status_code}")
 pprint (response.json())
+```
 
-const INDEX\_ID \= response.\_id
+  </Accordion>
+  <Accordion title="Node.js">
 
-console.log(\`Status code: ${resp.status}\`)
-
+```
+const INDEX_ID = response._id
+console.log(`Status code: ${resp.status}`)
 console.log(response)
+```
+
+  </Accordion>
+</AccordionGroup>
 
 The output should look similar to the following one:
 
+```
 Status code: 200
-
-{'\_id': '626a186f22c7851fcbe5c838',
-
+{'_id': '626a186f22c7851fcbe5c838',
  'message': "Succesfully created index 'docs-testing' index",
-
- 'type': 'index\_create'}
+ 'type': 'index_create'}
+```
 
 ## Upload a Video
 
-Once you've created an index, you can upload a video. When the video has finished uploading, Twelve Labs' fully-managed video search engine will automatically create a rich set of vectors that you can use to search through your video.
+Once you've created an index, you can upload a video. When the video has
+finished uploading, Twelve Labs' fully-managed video search engine will
+automatically create a rich set of vectors that you can use to search through
+your video.
 
-**NOTES**: 
+<Note>
 
-* Although this section demonstrates how to upload a file from the local file system, note that the API service allows you to upload a file from a URL or group multiple video uploading operations in a single API request using the cloud-to-cloud transfers feature. For instructions, see the [Uploading Videos](/guides/uploading-videos) section.
+- Although this section demonstrates how to upload a file from the local file
+  system, note that the API service allows you to upload a file from a URL or
+  group multiple video uploading operations in a single API request using the
+  cloud-to-cloud transfers feature. For instructions, see the
+  [Uploading Videos](/guides/uploading-videos) section.
 
-* The API service allows you to provide your own custom transcription file. For instructions, see the [Providing Your Custom Transcriptions](/guides/providing-your-custom-transcriptions) section.
+- The API service allows you to provide your own custom transcription file. For
+  instructions, see the
+  [Providing Your Custom Transcriptions](/guides/providing-your-custom-transcriptions)
+  section.
 
-1\. Declare the `tasks` endpoint:
+</Note>
 
-Python
+1. Declare the `tasks` endpoint:
 
-Node.js
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-INDEX\_TASK\_URL \= f"{API\_URL}/indexes/tasks"
+```
+INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
+const INDEX_TASK_URL = `${API_URL}/indexes/tasks`
+```
 
-const INDEX\_TASK\_URL \= \`${API\_URL}/indexes/tasks\`
+  </Accordion>
+  <Accordion title="Node.js">
 
-2\. To read your video file, open a stream making sure to replace the placeholders surrounded by `<>` with your values.
+```
+INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
+const INDEX_TASK_URL = `${API_URL}/indexes/tasks`
+```
 
-Python
+  </Accordion>
+</AccordionGroup>
 
-Node.js
+2. To read your video file, open a stream making sure to replace the
+   placeholders surrounded by `<>` with your values.
 
-file\_name \= "<FILE\_NAME>" \# Example: "test.mp4"
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-file\_path \= "<FILE\_PATH>" \# Example: "/Downloads/test.mp4"
+```
+file_name = "<FILE_NAME>" # Example: "test.mp4"
+file_path = "<FILE_PATH>" # Example: "/Downloads/test.mp4"
+file_stream = open(file_path,"rb")
+```
 
-file\_stream \= open(file\_path,"rb")
+  </Accordion>
+  <Accordion title="Node.js">
 
-const file\_path \= '<FILE\_PATH>' // Example: "/Downloads/test.mp4"
+```
+const file_path = '<FILE_PATH>' // Example: "/Downloads/test.mp4"
+const file_stream = fs.createReadStream(file_path)
+```
 
-const file\_stream \= fs.createReadStream(file\_path)
+  </Accordion>
+</AccordionGroup>
 
-3\. If you're using Python, store the index ID and the language of your video in a dictionary named `data` and the file to upload in an array named `file_param`. If you're using Node.js, store the index, the language of the video, and the file to upload, in a variable named `formData` of type `FormData`:
+3. If you're using Python, store the index ID and the language of your video in
+   a dictionary named `data` and the file to upload in an array named
+   `file_param`. If you're using Node.js, store the index, the language of the
+   video, and the file to upload, in a variable named `formData` of type
+   `FormData`:
 
-Python
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Node.js
-
-data \= {
-
-"index\_id": INDEX\_ID, 
-
-"language": "en"
-
+```
+data = {
+    "index_id": INDEX_ID,
+    "language": "en"
 }
+file_param=[
+    ("video_file", (file_name, file_stream, "application/octet-stream")),]
+```
 
-file\_param\=\[
+  </Accordion>
+  <Accordion title="Node.js">
 
-("file", (file\_name, file\_stream, "application/octet-stream")),\]
-
-let formData \= new FormData()
-
-formData.append('INDEX\_ID', INDEX\_ID)
-
+```
+let formData = new FormData()
+formData.append('INDEX_ID', INDEX_ID)
 formData.append('language', 'en')
+formData.append('video_file', file_stream)
+```
 
-formData.append('file', file\_stream)
+  </Accordion>
+</AccordionGroup>
 
-4\. Upload your video. Call the [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task) and store the result in a variable named `response:`
+4. Upload your video. Call the
+   [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task)
+   and store the result in a variable named `response:`
 
-Python
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Node.js
-
-response \= requests.post(INDEX\_TASK\_URL, headers\=headers, data\=data, files\=file\_param)
-
-config \= {
-
-method: 'post',
-
-url: INDEX\_TASK\_URL,
-
-headers: headers,
-
-data : formData
-
+```
+response = requests.post(INDEX_TASK_URL, headers=headers, data=data, files=file_param)
+config = {
+      method: 'post',
+      url: INDEX_TASK_URL,
+      headers: headers,
+      data : formData
 };
+resp = await axios(config)
+response = await resp.data
+```
 
-resp \= await axios(config)
+  </Accordion>
+  <Accordion title="Node.js">
 
-response \= await resp.data
+```
+response = requests.post(INDEX_TASK_URL, headers=headers, data=data, files=file_param)
+config = {
+      method: 'post',
+      url: INDEX_TASK_URL,
+      headers: headers,
+      data : formData
+};
+resp = await axios(config)
+response = await resp.data
+```
 
-5\. Store the ID of your task in a variable named `TASK_ID` and print the status code and response:
+  </Accordion>
+</AccordionGroup>
 
-Python
+5. Store the ID of your task in a variable named `TASK_ID` and print the status
+   code and response:
 
-Node.js
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-TASK\_ID \= response.json().get("\_id")
-
-print (f"Status code: {response.status\_code}")
-
+```
+TASK_ID = response.json().get("_id")
+print (f"Status code: {response.status_code}")
 pprint (response.json())
+```
 
-const TASK\_ID \= response.\_id
+  </Accordion>
+  <Accordion title="Node.js">
 
-console.log(\`Status code: ${resp.status}\`)
-
+```
+const TASK_ID = response._id
+console.log(`Status code: ${resp.status}`)
 console.log(response)
+```
+
+  </Accordion>
+</AccordionGroup>
 
 The output should look similar to the following one:
 
+```
 Status code: 200
+{'_id': '626a229622c7851fcbe5c83b',
+ 'message': 'Succesfully requested indexing task',
+ 'type': 'index_task_create'}
+```
 
-{'\_id': '626a229622c7851fcbe5c83b',
+6. _(Optional)_ You can use the
+   [tasks/{\_id}](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.)
+   endpoint to monitor the indexing process. Wait until the status shows as
+   `ready`:
 
-'message': 'Succesfully requested indexing task',
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-'type': 'index\_task\_create'}
-
-6\. _(Optional)_ You can use the [tasks/{\_id}](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.) endpoint to monitor the indexing process. Wait until the status shows as `ready`:
-
-Python
-
-Node.js
-
-INDEX\_TASK\_STATUS\_URL \= f"{API\_URL}/indexes/tasks/{TASK\_ID}"
-
-while True:
-
- response \= requests.get(INDEX\_TASK\_STATUS\_URL, headers\=headers)
-
- STATUS \= response.json().get("status")
-
-if STATUS \== "ready":
-
-print (f"Status code: {STATUS}")
-
- pprint (response.json())
-
-break
-
- time.sleep(10)
-
-const INDEX\_TASK\_STATUS\_URL \= \`${API\_URL}/indexes/tasks/${TASK\_ID}\`
-
-config \= {
-
+```
+const INDEX_TASK_STATUS_URL = `${API_URL}/indexes/tasks/${TASK_ID}`
+config = {
 method: 'get',
-
-url: INDEX\_TASK\_STATUS\_URL,
-
+url: INDEX_TASK_STATUS_URL,
 headers: headers,
-
 }
-
 let STATUS
-
 do {
-
- resp \= await axios(config)
-
- response \= await resp.data
-
-STATUS \= response.status
-
+resp = await axios(config)
+response = await resp.data
+STATUS = response.status
 if (STATUS !== 'ready')
-
-await new Promise(r \=> setTimeout(r, 10000));
-
+   await new Promise(r => setTimeout(r, 10000));
 } while (STATUS !== 'ready')
-
-console.log(\`Status code: ${STATUS}\`)
-
+console.log(`Status code: ${STATUS}`)
 console.log(response)
+```
+
+  </Accordion>
+  <Accordion title="Node.js">
+
+```
+INDEX_TASK_STATUS_URL = f"{API_URL}/indexes/tasks/{TASK_ID}"
+while True:
+    response = requests.get(INDEX_TASK_STATUS_URL, headers=headers)
+    STATUS = response.json().get("status")
+    if STATUS == "ready":
+        print (f"Status code: {STATUS}")
+        pprint (response.json())
+        break
+    time.sleep(10)
+```
+
+  </Accordion>
+</AccordionGroup>
 
 The output should look similar to the following one:
 
+```
 Status code: 200
-
-{'\_id': '626a3ddc22c7851fcbe5c844',
-
- 'created\_at': '2022-04-28T07:10:20.453Z',
-
- 'estimated\_time': '2022-04-28T07:22:08.885Z',
-
- 'index\_id': '626a273122c7851fcbe5c842',
-
+{'_id': '626a3ddc22c7851fcbe5c844',
+ 'created_at': '2022-04-28T07:10:20.453Z',
+ 'estimated_time': '2022-04-28T07:22:08.885Z',
+ 'index_id': '626a273122c7851fcbe5c842',
  'metadata': {'duration': 552.92,
-
- 'filename': 'car-accidents.mp4',
-
- 'height': 720,
-
- 'width': 1280},
-
+              'filename': 'car-accidents.mp4',
+              'height': 720,
+              'width': 1280},
  'status': 'ready',
+ 'type': 'index_task_info',
+ 'updated_at': '2022-04-28T07:22:09.16Z'}
+```
 
- 'type': 'index\_task\_info',
+<Note>
 
- 'updated\_at': '2022-04-28T07:22:09.16Z'}
+- Line 2 shows the ID of the indexing task
+- Line 5 shows the ID of your index
+- For details about the possible statuses, see the
+  [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.
 
-**NOTES**:
+</Note>
 
-* Line 2 shows the ID of the indexing task
-
-* Line 5 shows the ID of your index
-
-* For details about the possible statuses, see the [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.
-
-Note that you can also use webhooks to monitor the status of the indexing process. For details, see the [Webhooks](/guides/webhooks) section.
+Note that you can also use webhooks to monitor the status of the indexing
+process. For details, see the [Webhooks](/guides/webhooks) section.
 
 ## Make a Search Request
 
-When the API service has finished indexing the video, it can be searched by using the [search endpoint](/reference/api-reference/search).
+When the API service has finished indexing the video, it can be searched by
+using the [search endpoint](/reference/api-reference/search).
 
-1\. Define the `search` endpoint:
+1. Define the `search` endpoint:
 
-Python
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Node.js
+```
+SEARCH_URL = f"{API_URL}/search"
+const SEARCH_URL = `${API_URL}/search`
+```
 
-SEARCH\_URL \= f"{API\_URL}/search"
+  </Accordion>
+  <Accordion title="Node.js">
 
-const SEARCH\_URL \= \`${API\_URL}/search\`
+```
+SEARCH_URL = f"{API_URL}/search"
+const SEARCH_URL = `${API_URL}/search`
+```
 
-2\. The query parameters are passed in the `data` dictionary. The following example searches for car accidents based on visual cues: 
+2. The query parameters are passed in the `data` dictionary. The following
+   example searches for car accidents based on visual cues:
 
-Python
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Node.js
-
-data \= {
-
-"query": "car accidents",
-
-"index\_id": INDEX\_ID,
-
-"search\_options": \["visual"\],
-
+```
+data = {
+    "query": "car accidents",
+    "index_id": INDEX_ID,
+    "search_options": ["visual"],
 }
+```
 
-data \= JSON.stringify(
+  </Accordion>
+  <Accordion title="Node.js">
 
-{
+```
+data = JSON.stringify(
+    {
+    "query": "car accidents",
+    "index_id": INDEX_ID,
+    "search_options": ["visual"],
+    "operator": "and"
+  })
+```
 
-"query": "car accidents",
+  </Accordion>
+</AccordionGroup>
 
-"index\_id": INDEX\_ID,
-
-"search\_options": \["visual"\],
-
-"operator": "and"
-
-})
+<Note>
 
 Note the following about this code:
 
-* `query`**:** Represents your search terms.
+- `query`**:** Represents your search terms.
 
-* `index_id`: Use this field to specify the unique identifier of your index. Note that a search request retrieves results from all the videos in the specified index.
+- `index_id`: Use this field to specify the unique identifier of your index.
+  Note that a search request retrieves results from all the videos in the
+  specified index.
 
-* `search_options`: Use this field to specify the source of information that the AI-powered search engine uses when performing the search. The search options must be a subset of the indexing options provided when you created the index. Examples of using the `search_options` field:  
-   * To perform a visual search:`["visual"]`  
-   * To perform a conversational-context search based on transcription:`["conversation"]`  
-   * To search for text that appears on the screen: `["text_in_video"]`  
-   * To combine `visual` and `conversation`:`["visual", "conversation"]`. When you combine multiple search options, you can use the `operator` parameter to broaden or narrow your search. For details and examples, see the [Multiple Search Options](/guides/performing-searches/multiple-search-options) page.
+- `search_options`: Use this field to specify the source of information that the
+  AI-powered search engine uses when performing the search. The search options
+  must be a subset of the indexing options provided when you created the index.
+  Examples of using the `search_options` field:
+  - To perform a visual search:`["visual"]`
+  - To perform a conversational-context search based on
+    transcription:`["conversation"]`
+  - To search for text that appears on the screen: `["text_in_video"]`
+  - To combine `visual` and `conversation`:`["visual", "conversation"]`. When
+    you combine multiple search options, you can use the `operator` parameter to
+    broaden or narrow your search. For details and examples, see the
+    [Multiple Search Options](/guides/performing-searches/multiple-search-options)
+    page.
 
-3\. Call the [search endpoint](/reference/api-reference/search#create-search-request), passing it your query parameters:
+</Note>
 
-Python
+3. Call the
+   [search endpoint](/reference/api-reference/search#create-search-request),
+   passing it your query parameters:
 
-Node.js
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-response \= requests.post(SEARCH\_URL, headers\=headers, json\=data)
+```
+response = requests.post(SEARCH_URL, headers=headers, json=data)
+```
 
-config \= {
+  </Accordion>
+  <Accordion title="Node.js">
 
-method: 'post',
-
-url: SEARCH\_URL,
-
-headers: headers,
-
-data: data
-
+```
+config = {
+    method: 'post',
+    url: SEARCH_URL,
+    headers: headers,
+    data: data
 }
+resp = await axios(config)
+response = await resp.data
+```
 
-resp \= await axios(config)
+  </Accordion>
+</AccordionGroup>
 
-response \= await resp.data
+4. Print the status code and search results:
 
-4\. Print the status code and search results:
+<AccordionGroup>
+  <Accordion title="Python" defaultOpen="true">
 
-Python
-
-Node.js
-
-print (f"Status code: {response.status\_code}")
-
+```
+print (f"Status code: {response.status_code}")
 pprint (response.json())
+```
 
-console.log(\`Status code: ${resp.status}\`)
+  </Accordion>
+  <Accordion title="Node.js">
 
+```
+console.log(`Status code: ${resp.status}`)
 console.log(response)
+```
+
+  </Accordion>
+</AccordionGroup>
 
 The output should look similar to the following one:
 
+```
 Status code: 200
-
-{'data': \[{'confidence': 'high',
-
- 'end': 492,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 88.86,
-
- 'start': 486,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 216,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 79.04,
-
- 'start': 210,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 180,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 78.54,
-
- 'start': 176,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 382,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 76.42,
-
- 'start': 376,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 348,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 76.27,
-
- 'start': 342,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 504,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 75.06,
-
- 'start': 498,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 430,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 74.91,
-
- 'start': 424,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'mid',
-
- 'end': 188,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 74.59,
-
- 'start': 182,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'low',
-
- 'end': 176,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 72.72,
-
- 'start': 174,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'},
-
- {'confidence': 'low',
-
- 'end': 218,
-
- 'metadata': \[{'type': 'visual'}\],
-
- 'score': 72.71,
-
- 'start': 216,
-
- 'video\_id': '62b3ed5cd01d61be020682ed'}\],
-
- 'page\_info': {'limit\_per\_page': 10,
-
- 'next\_page\_id': 'ede1afc7-79c6-4df9-854a-1afe3535ef0d-1',
-
- 'page\_expired\_at': '2022-06-24T14:11:22Z',
-
- 'total\_results': 24},
-
+{'data': [{'confidence': 'high',
+           'end': 492,
+           'metadata': [{'type': 'visual'}],
+           'score': 88.86,
+           'start': 486,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 216,
+           'metadata': [{'type': 'visual'}],
+           'score': 79.04,
+           'start': 210,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 180,
+           'metadata': [{'type': 'visual'}],
+           'score': 78.54,
+           'start': 176,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 382,
+           'metadata': [{'type': 'visual'}],
+           'score': 76.42,
+           'start': 376,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 348,
+           'metadata': [{'type': 'visual'}],
+           'score': 76.27,
+           'start': 342,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 504,
+           'metadata': [{'type': 'visual'}],
+           'score': 75.06,
+           'start': 498,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 430,
+           'metadata': [{'type': 'visual'}],
+           'score': 74.91,
+           'start': 424,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'mid',
+           'end': 188,
+           'metadata': [{'type': 'visual'}],
+           'score': 74.59,
+           'start': 182,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'low',
+           'end': 176,
+           'metadata': [{'type': 'visual'}],
+           'score': 72.72,
+           'start': 174,
+           'video_id': '62b3ed5cd01d61be020682ed'},
+          {'confidence': 'low',
+           'end': 218,
+           'metadata': [{'type': 'visual'}],
+           'score': 72.71,
+           'start': 216,
+           'video_id': '62b3ed5cd01d61be020682ed'}],
+ 'page_info': {'limit_per_page': 10,
+               'next_page_id': 'ede1afc7-79c6-4df9-854a-1afe3535ef0d-1',
+               'page_expired_at': '2022-06-24T14:11:22Z',
+               'total_results': 24},
  'query': 'car accidents',
+ 'search_options': ['visual'],
+ 'search_pool': {'index_id': '626a186f22c7851fcbe5c838',
+                 'total_count': 1,
+                 'total_duration': 1363},
+ 'type': 'search_create'}
+```
 
- 'search\_options': \['visual'\],
-
- 'search\_pool': {'index\_id': '626a186f22c7851fcbe5c838',
-
- 'total\_count': 1,
-
- 'total\_duration': 1363},
-
- 'type': 'search\_create'}
-
-For more examples, see the [Performing Searches](/guides/performing-searches) page.
+For more examples, see the [Performing Searches](/guides/performing-searches)
+page.
 
 ## Source Code
 
-You can find the source code for this guide in the [twelvelabs-io/examples](https://github.com/twelvelabs-io/examples) GitHub repository.
+You can find the source code for this guide in the
+[twelvelabs-io/examples](https://github.com/twelvelabs-io/examples) GitHub
+repository.
 
 ## Related Topics
 
-* [API Reference](/reference/api-reference)
+- [API Reference](/reference/api-reference)

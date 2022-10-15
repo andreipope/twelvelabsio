@@ -2,104 +2,116 @@
 title: "Authentication"
 ---
 
-The API uses keys for authentication, and your key is similar to a password. Avoid distributing your API key to other users, or hard-coding it. Generate a new key whenever you think your account may have been compromised.
+The API uses keys for authentication, and your key is similar to a password.
+Avoid distributing your API key to other users, or hard-coding it. Generate a
+new key whenever you think your account may have been compromised.
 
-For security reasons, your API key automatically expires every two months. When your key has expired, you must generate a new one to continue using the API.
+For security reasons, your API key automatically expires every two months. When
+your key has expired, you must generate a new one to continue using the API.
 
-**NOTES**: 
+**NOTES**:
 
-* If your policies require you to rotate keys more often, you can always generate a new key.
+- If your policies require you to rotate keys more often, you can always
+  generate a new key.
 
-* If you want to pause using the API without deleting your account, you can revoke your API key.
+- If you want to pause using the API without deleting your account, you can
+  revoke your API key.
 
 The process of managing your API key can be divided into the following tasks:
 
-* **Retrieve your API key**: Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page, and select the **Copy** button under the **API Key** section.
+- **Retrieve your API key**: Go to the
+  [Dashboard](https://api.twelvelabs.io/dashboard) page, and select the **Copy**
+  button under the **API Key** section.
 
-* **Generate a new API key**: Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page, choose **Settings** from the sidebar, and then select the **Regenerate Key** button under the **API Key** section.
+- **Generate a new API key**: Go to the
+  [Dashboard](https://api.twelvelabs.io/dashboard) page, choose **Settings**
+  from the sidebar, and then select the **Regenerate Key** button under the
+  **API Key** section.
 
-* **Revoke an API key**: Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page, choose **Settings** from the sidebar, and then select the **Revoke Key** button under the **API Key** section.
+- **Revoke an API key**: Go to the
+  [Dashboard](https://api.twelvelabs.io/dashboard) page, choose **Settings**
+  from the sidebar, and then select the **Revoke Key** button under the **API
+  Key** section.
 
 ## Making Requests to the API
 
-Every time you make a request, you must pass the `x-api-key` header parameter with the value of your API key as shown in the example below:
+Every time you make a request, you must pass the `x-api-key` header parameter
+with the value of your API key as shown in the example below:
 
 Python
 
 Node.js
 
-\# Retrieve your API key from an environment variable named \`API\_KEY\`
+\# Retrieve your API key from an environment variable named \`API_KEY\`
 
-API\_KEY \= os.getenv('API\_KEY')
+API_KEY \= os.getenv('API_KEY')
 
-assert API\_KEY
-
+assert API_KEY
 
 \# Declare the \`headers\` dictionary containing your API key
 
 headers \= {
 
-"x-api-key": os.getenv('API\_KEY')
+"x-api-key": os.getenv('API_KEY')
 
 }
 
+INDEXES_URL \= f"{API_URL}/indexes"
 
-INDEXES\_URL \= f"{API\_URL}/indexes"
-
-INDEX\_NAME \= "<YOUR\_INDEX\_NAME>" 
+INDEX_NAME \= "<YOUR_INDEX_NAME>"
 
 data \= {
 
-"engine\_id": "marengo2",
+"engine_id": "marengo2",
 
-"index\_options": \["visual", "conversation", "text\_in\_video"\],
+"index_options": \["visual", "conversation", "text_in_video"\],
 
-"index\_name": INDEX\_NAME,
+"index_name": INDEX_NAME,
 
 }
 
-\# Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\` header parameter
+\# Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\`
+header parameter
 
-response \= requests.post(INDEXES\_URL, headers\=headers, json\=data)
+response \= requests.post(INDEXES_URL, headers\=headers, json\=data)
 
-INDEX\_ID \= response.json().get('\_id')
+INDEX_ID \= response.json().get('\_id')
 
-print (f'Status code: {response.status\_code}')
+print (f'Status code: {response.status_code}')
 
 pprint (response.json())
 
-// Retrieve your API key from an environment variable named \`API\_KEY\`
+// Retrieve your API key from an environment variable named \`API_KEY\`
 
-const API\_KEY \= process.env.API\_KEY
+const API_KEY \= process.env.API_KEY
 
-if (typeof API\_KEY \=== 'undefined') {
+if (typeof API_KEY \=== 'undefined') {
 
- console.log('API\_KEY is not defined.')
+console.log('API_KEY is not defined.')
 
- process.exit(1)
+process.exit(1)
 
 }
-
 
 // Declare the \`headers\` object containing your API key
 
 const headers \= {
 
-'x-api-key': process.env.API\_KEY
+'x-api-key': process.env.API_KEY
 
 }
 
-const INDEXES\_URL \= \`${API\_URL}/indexes\`
+const INDEXES_URL \= \`${API_URL}/indexes\`
 
-const INDEX\_NAME \= '<YOUR\_INDEX\_NAME>' 
+const INDEX_NAME \= '<YOUR_INDEX_NAME>'
 
 let data \= JSON.stringify({
 
-"engine\_id": "marengo",
+"engine_id": "marengo",
 
-"index\_options": \["visual", "conversation", "text\_in\_video"\],
+"index_options": \["visual", "conversation", "text_in_video"\],
 
-"index\_name": INDEX\_NAME
+"index_name": INDEX_NAME
 
 })
 
@@ -107,7 +119,7 @@ let config \= {
 
 method: 'post',
 
-url: INDEXES\_URL,
+url: INDEXES_URL,
 
 headers: headers,
 
@@ -115,27 +127,28 @@ data : data
 
 }
 
-
-// Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\` header parameter
+// Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\`
+header parameter
 
 let resp \= await axios(config)
 
 let response \= await resp.data
 
-const INDEX\_ID \= response.\_id
+const INDEX_ID \= response.\_id
 
 console.log(\`Status code: ${resp.status}\`)
 
 console.log(response)
 
-If your key has expired or is invalid, the response should look similar to the following:
+If your key has expired or is invalid, the response should look similar to the
+following:
 
 {
 
- "code": 401,
+"code": 401,
 
- "error": "token is not valid",
+"error": "token is not valid",
 
- "message": "Please provide a valid token"
+"message": "Please provide a valid token"
 
 }
