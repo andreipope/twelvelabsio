@@ -94,45 +94,47 @@ const TEXT_IN_VIDEO_URL = `${API_URL}/indexes/${INDEX_ID}/videos/${VIDEO_ID}/tex
 
 2. Retrieve the text and print it out to the console:
 
-Python
+<CodeGroup>
 
-Node.js
-
+```python Python
 response = requests.get(TEXT_IN_VIDEO_URL, headers=headers)
 
 print (f"Status code: {response.status_code}")
 
 pprint (response.json())
+```
 
+```js Node.js
 config = {
+  method: "get",
 
-method: 'get',
+  url: TEXT_IN_VIDEO_URL,
 
-url: TEXT_IN_VIDEO_URL,
+  headers: headers,
+};
 
-headers: headers,
+resp = await axios(config);
 
-}
+response = await resp.data;
 
-resp = await axios(config)
+console.log(`Status code: ${resp.status}`);
 
-response = await resp.data
+console.log(response);
+```
 
-console.log(`Status code: ${resp.status}`)
-
-console.log(response)
+</CodeGroup>
 
 The output should look similar to the following one:
 
-Status code: 200
+```json Status code: 200
 
-{'\_id': '62aeb771154f59c87660ce91',
+{'_id': '62aeb771154f59c87660ce91',
 
 'data': [{'end': 44, 'start': 43, 'value': 'THE DUCK GOT IT'},
 
 {'end': 50, 'start': 49, 'value': 'FA'},
 
-{'end': 61, 'start': 58, 'value': '\*TOURIST WAS UNHARMED'},
+{'end': 61, 'start': 58, 'value': '*TOURIST WAS UNHARMED'},
 
 {'end': 65, 'start': 64, 'value': 'ОН NO NO NO NO NO'},
 
@@ -170,7 +172,7 @@ Status code: 200
 
 {'end': 125, 'start': 124, 'value': 'ОН MY GOD'},
 
-{'end': 126, 'start': 125, 'value': "THAT'S A BIG A\*\* GATOR BUDDY"},
+{'end': 126, 'start': 125, 'value': "THAT'S A BIG A** GATOR BUDDY"},
 
 {'end': 129, 'start': 128, 'value': 'THAT IS A BIG GATOR'},
 
@@ -223,16 +225,21 @@ Status code: 200
 'index_id': '629deb409ea24f052b971993',
 
 'type': 'video_index_meta_text_in_video'}
+```
 
 Note that you can use the `start` and `end` query parameters to specify the time range for which you want to retrieve the text. The following example URL retrieves the text for the first 10 seconds of the video:
 
-Python
+<CodeGroup>
 
-Node.js
-
+```python
 TEXT_IN_VIDEO_URL = f"{API_URL}/indexes/{INDEX_ID}/videos/{VIDEO_ID}/text-in-video?start=0&end=10"
+```
 
-const TEXT_IN_VIDEO_URL = `${API_URL}/indexes/${INDEX_ID}/videos/${VIDEO_ID}/text-in-video?start=0&end=10`
+```js Node.js
+const TEXT_IN_VIDEO_URL = `${API_URL}/indexes/${INDEX_ID}/videos/${VIDEO_ID}/text-in-video?start=0&end=10`;
+```
+
+</CodeGroup>
 
 ## Related Topics
 
