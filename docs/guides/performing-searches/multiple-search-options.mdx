@@ -32,6 +32,7 @@ The following example combines `visual` and `conversation`, using the logical `O
 
 <CodeGroup>
 
+```python Python
 SEARCH_URL = f"{API_URL}/search"
 
 data = {
@@ -51,7 +52,9 @@ response = requests.post(SEARCH_URL, headers=headers, json=data)
 print (f"Status code: {response.status_code}")
 
 pprint (response.json())
+```
 
+```js Node.js
 const SEARCH_URL = `${API_URL}/search`
 
 const data = JSON.stringify(
@@ -87,10 +90,13 @@ const response = await resp.data
 console.log(`Status code: ${resp.status}`)
 
 console.log(response)
+```
+
+</CodeGroup>
 
 The output should look similar to the following one:
 
-Status code: 200
+```json Status code: 200
 
 {'conversation_option': 'semantic',
 
@@ -289,8 +295,9 @@ Status code: 200
 'total_duration': 1363},
 
 'type': 'search_create'}
+```
 
-The following example combines `visual `and`conversation`, using the logical `AND` operator to specify that the API should return only the results for which all search options match:
+The following example combines `visual` and `conversation`, using the logical `AND` operator to specify that the API should return only the results for which all search options match:
 
 <CodeGroup>
 
@@ -1169,9 +1176,7 @@ headers: headers,
 data: data
 
 }
-```
 
-```js Node.js
 const resp = await axios(config);
 
 const response = await resp.data;
@@ -1180,6 +1185,8 @@ console.log(`Status code: ${resp.status}`);
 
 console.log(response);
 ```
+
+</CodeGroup>
 
 The output should look similar to the following one:
 
