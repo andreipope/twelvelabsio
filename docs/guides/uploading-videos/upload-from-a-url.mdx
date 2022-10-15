@@ -8,196 +8,215 @@ Note that, although the example code in this guide is written in [Python](https:
 
 ## Prerequisites
 
-* Your video must meet the following requirements:  
-   * **Video resolution:** must be greater or equal than 360p and less than 1080p (FHD)  
-   * **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require different options, send us an email at support\[at\]twelvelabs.io.
+- Your video must meet the following requirements:
 
-* Ensure that the URL of the video is publicly accessible.
+  - **Video resolution:** must be greater or equal than 360p and less than 1080p (FHD)
+  - **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require different options, send us an email at support[at]twelvelabs.io.
 
-* You're familiar with the concepts that are described on the [Understand](/understand) page.
+- Ensure that the URL of the video is publicly accessible.
 
-* You've already created an index. For details, see the [Create an Index](/reference/api-reference/indexes#create-an-index) section.
+- You're familiar with the concepts that are described on the [Understand](/understand) page.
+
+- You've already created an index. For details, see the [Create an Index](/reference/api-reference/indexes#create-an-index) section.
 
 ## Recommendations
 
-* For consistent search results, Twelve Labs recommends you upload 360p videos.
+- For consistent search results, Twelve Labs recommends you upload 360p videos.
 
 ## Procedure
 
-1\. Declare the `indexes/tasks` endpoint:
+1. Declare the `indexes/tasks` endpoint:
 
-Python
+<CodeGroup>
 
-Node.js
+```python Python
+INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
+```
 
-INDEX\_TASK\_URL \= f"{API\_URL}/indexes/tasks"
+```js Node.js
+const INDEX_TASK_URL = `${API_URL}/indexes/tasks`;
+```
 
-const INDEX\_TASK\_URL \= \`${API\_URL}/indexes/tasks\`
+</CodeGroup>
 
-2\. If you're using Python, declare a dictionary named `data` and use it to store the index ID, language, and the URL of your video. If you're using Node.js, declare a variable named `formData` of type `FormData` and use it to store the index ID, language, and the URL of your video:
+2. If you're using Python, declare a dictionary named `data` and use it to store the index ID, language, and the URL of your video. If you're using Node.js, declare a variable named `formData` of type `FormData` and use it to store the index ID, language, and the URL of your video:
 
-Python
+<CodeGroup>
 
-Node.js
+```python Python
+data = {
 
-data \= {
-
-"index\_id": <YOUR\_INDEX\_ID\>,
+"index_id": <YOUR_INDEX_ID>,
 
 "language": "en",
 
-"video\_url": <YOUR\_VIDEO\_URL\>,
+"video_url": <YOUR_VIDEO_URL>,
 
 }
+```
 
-let formData \= new FormData()
+```js Node.js
+let formData = new FormData()
 
-formData.append('index\_id', <YOUR\_INDEX\_ID\>)
+formData.append('index_id', <YOUR_INDEX_ID>)
 
 formData.append('language', 'en')
 
-formData.append('video\_url', <YOUR\_VIDEO\_URL\>)
+formData.append('video_url', <YOUR_VIDEO_URL>)
+```
 
-3\. Upload your video. Call the [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task) and store the result in a variable named `response:`
+</CodeGroup>
 
-Python
+3. Upload your video. Call the [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task) and store the result in a variable named `response:`
 
-Node.js
+<CodeGroup>
 
-response \= requests.post(INDEX\_TASK\_URL, headers\=headers, data\=data)
+```python Python
+response = requests.post(INDEX_TASK_URL, headers=headers, data=data)
+```
 
-config \= {
+```js Node.js
+config = {
+  method: "post",
 
-method: 'post',
+  url: INDEX_TASK_URL,
 
-url: INDEX\_TASK\_URL,
+  headers: headers,
 
-headers: headers,
+  data: formData,
+};
 
-data : formData
+resp = await axios(config);
 
-}
+response = await resp.data;
+```
 
-resp \= await axios(config)
+</CodeGroup>
 
-response \= await resp.data
+4. Store the ID of your task in a variable named `TASK_ID` and print the status code and response:
 
-4\. Store the ID of your task in a variable named `TASK_ID` and print the status code and response:
+<CodeGroup>
 
-Python
+```python Python
+TASK_ID = response.json().get("_id")
 
-Node.js
-
-TASK\_ID \= response.json().get("\_id")
-
-print (f"Status code: {response.status\_code}")
+print (f"Status code: {response.status_code}")
 
 pprint (response.json())
+```
 
-const TASK\_ID \= response.\_id
+```js Node.js
+const TASK_ID = response._id;
 
-console.log(\`Status code: ${resp.status}\`)
+console.log(`Status code: ${resp.status}`);
 
-console.log(response)
+console.log(response);
+```
+
+</CodeGroup>
 
 The output should look similar to the following one:
 
-Status code: 200
+```json Status code: 200
+{
+  "_id": "6299f0d815d644f81a22b5e7",
 
-{ \_id: '6299f0d815d644f81a22b5e7',
+  "type": "index_task_create",
 
- type: 'index\_task\_create',
+  "message": "Succesfully requested indexing task"
+}
+```
 
- message: 'Succesfully requested indexing task' }
+5. _(Optional)_ You can use the [tasks/{\_id}](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.) endpoint to monitor the indexing process. Wait until the status shows as `ready`:
 
-5\. _(Optional)_ You can use the [tasks/{\_id}](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.) endpoint to monitor the indexing process. Wait until the status shows as `ready`:
+<CodeGroup>
 
-Python
-
-Node.js
-
-INDEX\_TASK\_STATUS\_URL \= f"{API\_URL}/indexes/tasks/{TASK\_ID}"
+```python Python
+INDEX_TASK_STATUS_URL = f"{API_URL}/indexes/tasks/{TASK_ID}"
 
 while True:
 
- response \= requests.get(INDEX\_TASK\_STATUS\_URL, headers\=headers)
+response = requests.get(INDEX_TASK_STATUS_URL, headers=headers)
 
- STATUS \= response.json().get("status")
+STATUS = response.json().get("status")
 
-if STATUS \== "ready":
+if STATUS == "ready":
 
 print (f"Status code: {STATUS}")
 
- pprint (response.json())
+pprint (response.json())
 
 break
 
- time.sleep(10)
+time.sleep(10)
 
-const INDEX\_TASK\_STATUS\_URL \= \`${API\_URL}/indexes/tasks/${TASK\_ID}\`
+const INDEX_TASK_STATUS_URL = `${API_URL}/indexes/tasks/${TASK_ID}`
 
-config \= {
+config = {
 
 method: 'get',
 
-url: INDEX\_TASK\_STATUS\_URL,
+url: INDEX_TASK_STATUS_URL,
 
 headers: headers,
 
 }
+```
 
-let STATUS
+```js Node.js
+let STATUS;
 
 do {
+  resp = await axios(config);
 
- resp \= await axios(config)
+  response = await resp.data;
 
- response \= await resp.data
+  STATUS = response.status;
 
-STATUS \= response.status
+  if (STATUS !== "ready") await new Promise((r) => setTimeout(r, 10000));
+} while (STATUS !== "ready");
 
-if (STATUS !== 'ready')
+console.log(`Status code: ${STATUS}`);
 
-await new Promise(r \=> setTimeout(r, 10000));
-
-} while (STATUS !== 'ready')
-
-console.log(\`Status code: ${STATUS}\`)
-
-console.log(response)
+console.log(response);
+```
 
 The output should look similar to the following one:
 
-Status code: 200
+```json Status code: 200
+{
+  "_id": "6299f0d815d644f81a22b5e7",
 
-{'\_id': '6299f0d815d644f81a22b5e7',
+  "created_at": "2022-06-03T11:30:32.876Z",
 
- 'created\_at': '2022-06-03T11:30:32.876Z',
+  "estimated_time": "2022-06-03T11:39:41.62Z",
 
- 'estimated\_time': '2022-06-03T11:39:41.62Z',
+  "index_id": "6298d673f1090f1100476d4c",
 
- 'index\_id': '6298d673f1090f1100476d4c',
+  "metadata": {
+    "duration": 531.998133,
 
- 'metadata': {'duration': 531.998133,
+    "filename": "1c20f123-10e8-43f4-b4a8-b08a73a3a32a",
 
- 'filename': '1c20f123-10e8-43f4-b4a8-b08a73a3a32a',
+    "height": 480,
 
- 'height': 480,
+    "width": 854
+  },
 
- 'width': 854},
+  "status": "ready",
 
- 'status': 'ready',
+  "type": "index_task_info",
 
- 'type': 'index\_task\_info',
+  "updated_at": "2022-06-03T11:40:07.038Z"
+}
+```
 
- 'updated\_at': '2022-06-03T11:40:07.038Z'}
+**NOTES**:
 
-**NOTES**: 
+- For details about the possible statuses, see the [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.
 
-* For details about the possible statuses, see the [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.
-
-* You can also use webhooks to monitor the status of the indexing process. For details, see the [Webhooks](/guides/webhooks) section.
+- You can also use webhooks to monitor the status of the indexing process. For details, see the [Webhooks](/guides/webhooks) section.
 
 ## Related Topics
 
-* [Indexes/Tasks](/reference/api-reference/indexes-tasks)
+- [Indexes/Tasks](/reference/api-reference/indexes-tasks)

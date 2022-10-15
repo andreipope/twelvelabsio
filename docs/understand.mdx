@@ -57,16 +57,16 @@ The following diagram illustrates on a high level the workflow of using the API:
 
 The steps are as follows:
 
-1. 1. Create an index, specifying the name, indexing options, and the engine.
-      The API creates a unique identifier for each index.
+1. Create an index, specifying the name, indexing options, and the engine.
+   The API creates a unique identifier for each index.
 
-2. 2. Upload a video, specifying the unique identifier of the index with which
-      the video will be associated. The deep learning models will process your
-      video according to the indexing options you’ve specified for the index,
-      and store it as a video vector. The API creates a video indexing task and
-      assigns it a unique identifier.
+2. Upload a video, specifying the unique identifier of the index with which
+   the video will be associated. The deep learning models will process your
+   video according to the indexing options you’ve specified for the index,
+   and store it as a video vector. The API creates a video indexing task and
+   assigns it a unique identifier.
 
-3. 3. Perform a search by providing your search terms and the unique identifier
-      of the index you want to query. For each match found, the search engine
-      will return, among other information, the unique identifier of the video,
-      and the start and end time of the matching video fragment.
+3. Perform a search by providing your search terms and the unique identifier
+   of the index you want to query. For each match found, the search engine
+   will return, among other information, the unique identifier of the video,
+   and the start and end time of the matching video fragment.

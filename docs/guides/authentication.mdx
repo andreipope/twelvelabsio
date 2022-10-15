@@ -38,54 +38,51 @@ The process of managing your API key can be divided into the following tasks:
 Every time you make a request, you must pass the `x-api-key` header parameter
 with the value of your API key as shown in the example below:
 
-Python
+<CodeGroup>
 
-Node.js
+```python Python
+# Retrieve your API key from an environment variable named `API_KEY`
 
-\# Retrieve your API key from an environment variable named \`API_KEY\`
-
-API_KEY \= os.getenv('API_KEY')
+API_KEY = os.getenv('API_KEY')
 
 assert API_KEY
 
-\# Declare the \`headers\` dictionary containing your API key
+# Declare the `headers` dictionary containing your API key
 
-headers \= {
+headers = {
 
 "x-api-key": os.getenv('API_KEY')
 
 }
 
-INDEXES_URL \= f"{API_URL}/indexes"
+INDEXES_URL = f"{API_URL}/indexes"
 
-INDEX_NAME \= "<YOUR_INDEX_NAME>"
+INDEX_NAME = "<YOUR_INDEX_NAME>"
 
-data \= {
-
+data = {
 "engine_id": "marengo2",
-
-"index_options": \["visual", "conversation", "text_in_video"\],
-
+"index_options": ["visual", "conversation", "text_in_video"],
 "index_name": INDEX_NAME,
-
 }
 
-\# Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\`
+# Make a POST request to the `indexes` endpoint, passing the `x-api-key`
 header parameter
 
-response \= requests.post(INDEXES_URL, headers\=headers, json\=data)
+response = requests.post(INDEXES_URL, headers=headers, json=data)
 
-INDEX_ID \= response.json().get('\_id')
+INDEX_ID = response.json().get('_id')
 
 print (f'Status code: {response.status_code}')
 
 pprint (response.json())
+```
 
-// Retrieve your API key from an environment variable named \`API_KEY\`
+```js Node.js
+// Retrieve your API key from an environment variable named `API_KEY`
 
-const API_KEY \= process.env.API_KEY
+const API_KEY = process.env.API_KEY
 
-if (typeof API_KEY \=== 'undefined') {
+if (typeof API_KEY === 'undefined') {
 
 console.log('API_KEY is not defined.')
 
@@ -93,29 +90,29 @@ process.exit(1)
 
 }
 
-// Declare the \`headers\` object containing your API key
+// Declare the `headers` object containing your API key
 
-const headers \= {
+const headers = {
 
 'x-api-key': process.env.API_KEY
 
 }
 
-const INDEXES_URL \= \`${API_URL}/indexes\`
+const INDEXES_URL = `${API_URL}/indexes`
 
-const INDEX_NAME \= '<YOUR_INDEX_NAME>'
+const INDEX_NAME = '<YOUR_INDEX_NAME>'
 
-let data \= JSON.stringify({
+let data = JSON.stringify({
 
 "engine_id": "marengo",
 
-"index_options": \["visual", "conversation", "text_in_video"\],
+"index_options": ["visual", "conversation", "text_in_video"],
 
 "index_name": INDEX_NAME
 
 })
 
-let config \= {
+let config = {
 
 method: 'post',
 
@@ -127,16 +124,16 @@ data : data
 
 }
 
-// Make a POST request to the \`indexes\` endpoint, passing the \`x-api-key\`
+// Make a POST request to the `indexes` endpoint, passing the `x-api-key`
 header parameter
 
-let resp \= await axios(config)
+let resp = await axios(config)
 
-let response \= await resp.data
+let response = await resp.data
 
-const INDEX_ID \= response.\_id
+const INDEX_ID = response._id
 
-console.log(\`Status code: ${resp.status}\`)
+console.log(`Status code: ${resp.status}`)
 
 console.log(response)
 
@@ -152,3 +149,6 @@ following:
 "message": "Please provide a valid token"
 
 }
+```
+
+</CodeGroup>

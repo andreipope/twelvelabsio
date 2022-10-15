@@ -1,64 +1,61 @@
 ---
 title: "Notification Schema"
+api: "POST /user-webhook-endpoint"
 ---
 
 ## Header
 
 The header contains a field named`TL-Signature`.This allows you to verify that the event was sent by Twelve Labs. The `TL-Signature` field is composed of two parts.
 
-* `t` : A Unix timestamp representing the time when the API service has sent the notification
+- `t` : A Unix timestamp representing the time when the API service has sent the notification
 
-* `v1` : A signature generated uniquely for each webhook event, using `HMAC` with `SHA-256`. For instructions on how you can verify the signature, see the [Validate the Integrity of an Event](/guides/webhooks/requirements-for-processing-notifications#1.-validate-the-integrity-of-an-event) section.
+- `v1` : A signature generated uniquely for each webhook event, using `HMAC` with `SHA-256`. For instructions on how you can verify the signature, see the [Validate the Integrity of an Event](/guides/webhooks/requirements-for-processing-notifications#1.-validate-the-integrity-of-an-event) section.
 
 ## Response Schema
 
 Responses are in JSON format and contain the following fields:
 
-* `id`: A string representing the unique identifier of the notification.
+- `id`: A string representing the unique identifier of the notification.
 
-* `created_at`: A string indicating the date and time, in the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the API service has sent the notification.
+- `created_at`: A string indicating the date and time, in the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the API service has sent the notification.
 
-* `type`: A string indicating the type of event. It can take one of the following values:  
-   * `index.task.ready`: Specifies that your video is ready to be searched  
-   * `index.task.failed:` Specifies that the video indexing task has failed.
+- `type`: A string indicating the type of event. It can take one of the following values:
 
-* `data:` An object that contains the following information:  
-   * `id`: A string representing the unique identifier of the video indexing task.  
-   * `metadata`: An object containing the duration of the video.  
-   * `status`: A string representing the status of the video indexing task. For details about the possible statuses, see the [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.  
-   * `engine`: The engine used to index the video.  
-   * `index_options`: An array of strings that determines how the engine processes your videos. For more details, see the [Indexing Options](/concepts/indexing-options) page.  
-   * `tags`: An array of strings representing the tags associated with this video indexing task
+  - `index.task.ready`: Specifies that your video is ready to be searched
+  - `index.task.failed:` Specifies that the video indexing task has failed.
 
-## Example
+- `data:` An object that contains the following information:
+  - `id`: A string representing the unique identifier of the video indexing task.
+  - `metadata`: An object containing the duration of the video.
+  - `status`: A string representing the status of the video indexing task. For details about the possible statuses, see the [Indexes/Tasks](/reference/api-reference/indexes-tasks) page.
+  - `engine`: The engine used to index the video.
+  - `index_options`: An array of strings that determines how the engine processes your videos. For more details, see the [Indexing Options](/concepts/indexing-options) page.
+  - `tags`: An array of strings representing the tags associated with this video indexing task
 
-POST /user-webhook-endpoint HTTP/1.1
+<ResponseExample>
 
-TL-Signature: t=1659342128,v1=0f596565898448fe00d22c52fcaddffb1d1054da3b1d47268b99b6041c79aa29
-
-
+```json Response Example
 {
+  "id": "whe_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 
- "id": "whe\_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "created_at": "2022-08-01T17:22:18.372553+09:00",
 
- "created\_at": "2022-08-01T17:22:18.372553+09:00",
+  "type": "index.task.ready",
 
- "type": "index.task.ready",
+  "data": {
+    "id": "xxxxxxxxxxxxxxxxxxxxxxx",
 
- "data": {
+    "metadata": { "duration": 30 },
 
- "id": "xxxxxxxxxxxxxxxxxxxxxxx",
+    "status": "ready",
 
- "metadata": { "duration": 30 },
+    "engine": "marengo",
 
- "status": "ready",
+    "index_options": ["visual"],
 
- "engine": "marengo",
-
- "index\_options": \["visual"\],
-
- "tags": \[\]
-
- }
-
+    "tags": []
+  }
 }
+```
+
+</ResponseExample>
