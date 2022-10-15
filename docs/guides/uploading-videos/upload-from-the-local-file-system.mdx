@@ -64,35 +64,13 @@ const file_path = '<YOUR_FILE_PATH>'
 const file_stream = fs.createReadStream(file_path)
 ```
 
+</CodeGroup>
+
 3. If you're using Python, store the index ID and the language of your video in
    a dictionary named `data` and the file to upload in an array named
    `file_param`. If you're using Node.js, store the index, the language of the
    video, and the file to upload in a variable named `formData` of type
    `FormData`:
-
-</CodeGroup>
-
-<CodeGroup>
-
-```python Python
-
-
-
-```
-
-```json Node.js
-
-
-
-```
-
-</CodeGroup>
-
-4. Upload your video. Call the
-   [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task)
-   and store the result in a variable named `response:`
-
-</CodeGroup>
 
 <CodeGroup>
 
@@ -118,6 +96,39 @@ formData.append('video_file', file_stream)
 
 </CodeGroup>
 
+4. Upload your video. Call the
+   [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task)
+   and store the result in a variable named `response:`
+
+</CodeGroup>
+
+<CodeGroup>
+
+```python Python
+
+response = requests.post(INDEXES_TASK_URL, headers=headers, data=data, files=file_param)
+
+```
+
+```json Node.js
+
+config = {
+      method: 'post',
+      url: INDEX_TASK_URL,
+      headers: headers,
+      data : formData
+};
+resp = await axios(config)
+response = await resp.data
+
+}
+file_param = [
+    ("video_file", (file_name, file_stream, "application/octet-stream")),]let formData = new FormData()
+
+```
+
+</CodeGroup>
+
 5. Store the ID of your task in a variable named `TASK_ID` and print the status
    code and response:
 
@@ -127,13 +138,27 @@ formData.append('video_file', file_stream)
 
 ```python Python
 
-
+TASK_ID = response.json().get("_id")
+print (f"Status code: {response.status_code}")
+pprint (response.json())
 
 ```
 
 ```json Node.js
 
+const TASK_ID = response._id
+console.log(`Status code: ${resp.status}`)
+console.log(response)
 
+```
+
+The output should look similar to the following one:
+
+```
+Status code: 200
+{'_id': '626a229622c7851fcbe5c83b',
+ 'message': 'Succesfully requested indexing task',
+ 'type': 'index_task_create'}
 ```
 
 </CodeGroup>
@@ -149,19 +174,57 @@ formData.append('video_file', file_stream)
 
 ```python Python
 
-
+INDEX_TASK_STATUS_URL = f"{API_URL}/indexes/tasks/{TASK_ID}"
+while True:
+    response = requests.get(INDEX_TASK_STATUS_URL, headers=headers)
+    STATUS = response.json().get("status")
+    if STATUS == "ready":
+        print (f"Status code: {STATUS}")
+        pprint (response.json())
+        break
+    time.sleep(10)
 
 ```
 
 ```json Node.js
 
-
+const INDEX_TASK_STATUS_URL = `${API_URL}/indexes/tasks/${TASK_ID}`
+config = {
+  method: 'get',
+  url: INDEX_TASK_STATUS_URL,
+  headers: headers,
+}
+let STATUS
+do {
+  resp = await axios(config)
+  response = await resp.data
+  STATUS = response.status
+  if (STATUS !== 'ready')
+    await new Promise(r => setTimeout(r, 10000));
+} while (STATUS !== 'ready')
+console.log(`Status code: ${STATUS}`)
+console.log(response)
 
 ```
 
 </CodeGroup>
 
 The output should look similar to the following one:
+
+```
+Status code: 200
+{'_id': '626a3ddc22c7851fcbe5c844',
+ 'created_at': '2022-04-28T07:10:20.453Z',
+ 'estimated_time': '2022-04-28T07:22:08.885Z',
+ 'index_id': '626a273122c7851fcbe5c842',
+ 'metadata': {'duration': 552.92,
+              'filename': 'car-accidents.mp4',
+              'height': 720,
+              'width': 1280},
+ 'status': 'ready',
+ 'type': 'index_task_info',
+ 'updated_at': '2022-04-28T07:22:09.16Z'}
+```
 
 <Note>
 
