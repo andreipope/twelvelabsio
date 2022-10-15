@@ -101,10 +101,9 @@ To list all the videos in an index, call the get method of the
 `indexes/videos endpoint`, replacing `<YOUR_INDEX_ID>` with the unique
 identifier of your index:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 INDEX_ID = "<YOUR_INDEX_ID>"
 INDEXES_VIDEOS_URL = f"{API_URL}/indexes/{INDEX_ID}/videos"
 response = requests.get(INDEXES_VIDEOS_URL, headers=headers)
@@ -112,57 +111,65 @@ print (f'Status code: {response.status_code}')
 pprint (response.json())
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-const INDEX_ID = 'YOUR_INDEX_ID'
-const INDEXES_VIDEOS_URL = `${API_URL}/indexes/${INDEX_ID}/videos`
+```js Node.js
+const INDEX_ID = "YOUR_INDEX_ID";
+const INDEXES_VIDEOS_URL = `${API_URL}/indexes/${INDEX_ID}/videos`;
 const config = {
-    method: 'get',
-    url: INDEXES_VIDEOS_URL,
-    headers: headers,
-}
-const resp = await axios(config)
-const response = await resp.data
-console.log(resp.status)
-console.log(JSON.stringify(response, null, 2))
+  method: "get",
+  url: INDEXES_VIDEOS_URL,
+  headers: headers,
+};
+const resp = await axios(config);
+const response = await resp.data;
+console.log(resp.status);
+console.log(JSON.stringify(response, null, 2));
 ```
 
-  </Accordion>
-  
-</AccordionGroup>
+</Codegroup>
 
 The output should look similar to the following one. Note that, in the example
 output below, two videos named 01.mp4 and 02.mp4 are being stored in the index:
 
-```json
-200
-{'data': [{'_id': '627df188ba9f116e5ea92a75',
-           'created_at': '2022-05-13T05:50:00Z',
-           'indexed_at': '2022-05-13T06:02:06Z',
-           'metadata': {'duration': 552.92,
-                        'filename': '01.mp4',
-                        'fps': 25,
-                        'height': 720,
-                        'size': 148108668,
-                        'width': 1280},
-           'updated_at': '2022-05-13T05:50:00Z'},
-          {'_id': '627de9b2ba9f116e5ea92a74',
-           'created_at': '2022-05-13T05:16:34Z',
-           'indexed_at': '2022-05-13T05:31:05Z',
-           'metadata': {'duration': 30.033333,
-                        'filename': '02.mp4',
-                        'fps': 30,
-                        'height': 270,
-                        'size': 1570024,
-                        'width': 480},
-           'updated_at': '2022-05-13T05:16:34Z'}],
- 'page_info': {'limit_per_page': 10,
-               'page': 0,
-               'total_page': 0,
-               'total_results': 2},
- 'type': 'video_index_list'}
+```json Status Code: 200
+{
+  "data": [
+    {
+      "_id": "627df188ba9f116e5ea92a75",
+      "created_at": "2022-05-13T05:50:00Z",
+      "indexed_at": "2022-05-13T06:02:06Z",
+      "metadata": {
+        "duration": 552.92,
+        "filename": "01.mp4",
+        "fps": 25,
+        "height": 720,
+        "size": 148108668,
+        "width": 1280
+      },
+      "updated_at": "2022-05-13T05:50:00Z"
+    },
+    {
+      "_id": "627de9b2ba9f116e5ea92a74",
+      "created_at": "2022-05-13T05:16:34Z",
+      "indexed_at": "2022-05-13T05:31:05Z",
+      "metadata": {
+        "duration": 30.033333,
+        "filename": "02.mp4",
+        "fps": 30,
+        "height": 270,
+        "size": 1570024,
+        "width": 480
+      },
+      "updated_at": "2022-05-13T05:16:34Z"
+    }
+  ],
+  "page_info": {
+    "limit_per_page": 10,
+    "page": 0,
+    "total_page": 0,
+    "total_results": 2
+  },
+  "type": "video_index_list"
+}
 ```
 
 ### Related Topics

@@ -58,33 +58,25 @@ export API_URL=https://api.twelvelabs.io/v1
 
 1. In a new directory, install the required packages:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 python -m pip install requests pprint
+```
+
+```python Node.js
 npm install axios form-data
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-python -m pip install requests pprint
-npm install axios form-data
-```
-
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 2. In a new source file, add the following statements to import the required
    packages and retrieve the values of the environment variables you've set in
    the previous section:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 import requests
 import glob
 from pprint import pprint
@@ -96,80 +88,65 @@ API_KEY = os.getenv("API_KEY")
 assert API_KEY
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 (async () => {
-  const FormData = require('form-data')
-  const axios = require('axios');
-  const fs = require('fs')
+  const FormData = require("form-data");
+  const axios = require("axios");
+  const fs = require("fs");
 
-  const API_URL = process.env.API_URL
-  if (typeof API_URL === 'undefined') {
-    console.log('API_URL is not defined.')
-    process.exit(1)
+  const API_URL = process.env.API_URL;
+  if (typeof API_URL === "undefined") {
+    console.log("API_URL is not defined.");
+    process.exit(1);
   }
-  const API_KEY = process.env.API_KEY
-  if (typeof API_KEY === 'undefined') {
-    console.log('API_KEY is not defined.')
-    process.exit(1)
+  const API_KEY = process.env.API_KEY;
+  if (typeof API_KEY === "undefined") {
+    console.log("API_KEY is not defined.");
+    process.exit(1);
   }
-})()
+})();
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 3. Specify the name of your index. Make sure to replace the placeholder
    surrounded by `<>` with the name you want to use for your index:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python python
 INDEX_NAME = "<YOUR_INDEX_NAME>" # Use a descriptive name for your index
 const INDEX_NAME = '<YOUR_INDEX_NAME>' // Use a descriptive name for your index
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-const INDEX_NAME = '<YOUR_INDEX_NAME>' // Use a descriptive name for your index
+```js Node.js
+const INDEX_NAME = "<YOUR_INDEX_NAME>"; // Use a descriptive name for your index
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 4. Declare the `indexes` endpoint:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 INDEXES_URL = f"{API_URL}/indexes"
 const INDEXES_URL = `${API_URL}/indexes`
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 INDEXES_URL = f"{API_URL}/indexes"
 const INDEXES_URL = `${API_URL}/indexes`
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 5. Your API key is passed in the `headers` dictionary and the parameters for
    creating a new index are passed in the `data` dictionary:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 headers = {
     "x-api-key": API_KEY
 }
@@ -181,23 +158,19 @@ data = {
 }
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 const headers = {
-    'x-api-key': API_KEY,
-}
+  "x-api-key": API_KEY,
+};
 
 let data = JSON.stringify({
-    "engine_id": "marengo2",
-    "index_options": ["visual", "conversation", "text_in_video"],
-    "index_name": INDEX_NAME
-})
+  engine_id: "marengo2",
+  index_options: ["visual", "conversation", "text_in_video"],
+  index_name: INDEX_NAME,
+});
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 <Note>
 
@@ -219,61 +192,52 @@ Note the following about this code:
    [indexes endpoint](/reference/api-reference/indexes#create-index) and store
    the result in a variable named `response`:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 response = requests.post(INDEXES_URL, headers=headers, json=data)
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 let config = {
-    method: 'post',
-    url: INDEXES_URL,
-    headers: headers,
-    data : data
-}
-let resp = await axios(config)
-let response = await resp.data
+  method: "post",
+  url: INDEXES_URL,
+  headers: headers,
+  data: data,
+};
+let resp = await axios(config);
+let response = await resp.data;
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 7. Store the ID of your index in a variable named `INDEX_ID` and print the
    status code and response:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 INDEX_ID = response.json().get("_id")
 print (f"Status code: {response.status_code}")
 pprint (response.json())
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-const INDEX_ID = response._id
-console.log(`Status code: ${resp.status}`)
-console.log(response)
+```js Node.js
+const INDEX_ID = response._id;
+console.log(`Status code: ${resp.status}`);
+console.log(response);
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 The output should look similar to the following one:
 
-```
-Status code: 200
-{'_id': '626a186f22c7851fcbe5c838',
- 'message': "Succesfully created index 'docs-testing' index",
- 'type': 'index_create'}
+```json Status code: 200
+{
+  "_id": "626a186f22c7851fcbe5c838",
+  "message": "Succesfully created index 'docs-testing' index",
+  "type": "index_create"
+}
 ```
 
 ## Upload a Video
@@ -300,47 +264,35 @@ your video.
 
 1. Declare the `tasks` endpoint:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python
 INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
 const INDEX_TASK_URL = `${API_URL}/indexes/tasks`
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
 const INDEX_TASK_URL = `${API_URL}/indexes/tasks`
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 2. To read your video file, open a stream making sure to replace the
    placeholders surrounded by `<>` with your values.
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+```python Python
 file_name = "<FILE_NAME>" # Example: "test.mp4"
 file_path = "<FILE_PATH>" # Example: "/Downloads/test.mp4"
 file_stream = open(file_path,"rb")
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-const file_path = '<FILE_PATH>' // Example: "/Downloads/test.mp4"
-const file_stream = fs.createReadStream(file_path)
+```js Node.js
+const file_path = "<FILE_PATH>"; // Example: "/Downloads/test.mp4"
+const file_stream = fs.createReadStream(file_path);
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 3. If you're using Python, store the index ID and the language of your video in
    a dictionary named `data` and the file to upload in an array named
@@ -348,10 +300,7 @@ const file_stream = fs.createReadStream(file_path)
    video, and the file to upload, in a variable named `formData` of type
    `FormData`:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+```python Python
 data = {
     "index_id": INDEX_ID,
     "language": "en"
@@ -360,27 +309,20 @@ file_param=[
     ("video_file", (file_name, file_stream, "application/octet-stream")),]
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-let formData = new FormData()
-formData.append('INDEX_ID', INDEX_ID)
-formData.append('language', 'en')
-formData.append('video_file', file_stream)
+```js Node.js
+let formData = new FormData();
+formData.append("INDEX_ID", INDEX_ID);
+formData.append("language", "en");
+formData.append("video_file", file_stream);
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 4. Upload your video. Call the
    [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task)
    and store the result in a variable named `response:`
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+```python Python
 response = requests.post(INDEX_TASK_URL, headers=headers, data=data, files=file_param)
 config = {
       method: 'post',
@@ -392,55 +334,50 @@ resp = await axios(config)
 response = await resp.data
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-response = requests.post(INDEX_TASK_URL, headers=headers, data=data, files=file_param)
+```js Node.js
+response = requests.post(
+  INDEX_TASK_URL,
+  (headers = headers),
+  (data = data),
+  (files = file_param)
+);
 config = {
-      method: 'post',
-      url: INDEX_TASK_URL,
-      headers: headers,
-      data : formData
+  method: "post",
+  url: INDEX_TASK_URL,
+  headers: headers,
+  data: formData,
 };
-resp = await axios(config)
-response = await resp.data
+resp = await axios(config);
+response = await resp.data;
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 5. Store the ID of your task in a variable named `TASK_ID` and print the status
    code and response:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+```python Python
 TASK_ID = response.json().get("_id")
 print (f"Status code: {response.status_code}")
 pprint (response.json())
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-const TASK_ID = response._id
-console.log(`Status code: ${resp.status}`)
-console.log(response)
+```js Node.js
+const TASK_ID = response._id;
+console.log(`Status code: ${resp.status}`);
+console.log(response);
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 The output should look similar to the following one:
 
-```
-Status code: 200
-{'_id': '626a229622c7851fcbe5c83b',
- 'message': 'Succesfully requested indexing task',
- 'type': 'index_task_create'}
+```json Status code: 200
+{
+  "_id": "626a229622c7851fcbe5c83b",
+  "message": "Succesfully requested indexing task",
+  "type": "index_task_create"
+}
 ```
 
 6. _(Optional)_ You can use the
@@ -448,10 +385,7 @@ Status code: 200
    endpoint to monitor the indexing process. Wait until the status shows as
    `ready`:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+```python Python
 const INDEX_TASK_STATUS_URL = `${API_URL}/indexes/tasks/${TASK_ID}`
 config = {
 method: 'get',
@@ -470,10 +404,7 @@ console.log(`Status code: ${STATUS}`)
 console.log(response)
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 INDEX_TASK_STATUS_URL = f"{API_URL}/indexes/tasks/{TASK_ID}"
 while True:
     response = requests.get(INDEX_TASK_STATUS_URL, headers=headers)
@@ -485,24 +416,26 @@ while True:
     time.sleep(10)
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 The output should look similar to the following one:
 
-```
-Status code: 200
-{'_id': '626a3ddc22c7851fcbe5c844',
- 'created_at': '2022-04-28T07:10:20.453Z',
- 'estimated_time': '2022-04-28T07:22:08.885Z',
- 'index_id': '626a273122c7851fcbe5c842',
- 'metadata': {'duration': 552.92,
-              'filename': 'car-accidents.mp4',
-              'height': 720,
-              'width': 1280},
- 'status': 'ready',
- 'type': 'index_task_info',
- 'updated_at': '2022-04-28T07:22:09.16Z'}
+```json Status code: 200
+{
+  "_id": "626a3ddc22c7851fcbe5c844",
+  "created_at": "2022-04-28T07:10:20.453Z",
+  "estimated_time": "2022-04-28T07:22:08.885Z",
+  "index_id": "626a273122c7851fcbe5c842",
+  "metadata": {
+    "duration": 552.92,
+    "filename": "car-accidents.mp4",
+    "height": 720,
+    "width": 1280
+  },
+  "status": "ready",
+  "type": "index_task_info",
+  "updated_at": "2022-04-28T07:22:09.16Z"
+}
 ```
 
 <Note>
@@ -524,29 +457,25 @@ using the [search endpoint](/reference/api-reference/search).
 
 1. Define the `search` endpoint:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+<CodeGroup>
+```python Python
 SEARCH_URL = f"{API_URL}/search"
 const SEARCH_URL = `${API_URL}/search`
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 SEARCH_URL = f"{API_URL}/search"
 const SEARCH_URL = `${API_URL}/search`
 ```
+
+</CodeGroup>
 
 2. The query parameters are passed in the `data` dictionary. The following
    example searches for car accidents based on visual cues:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 data = {
     "query": "car accidents",
     "index_id": INDEX_ID,
@@ -554,21 +483,16 @@ data = {
 }
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-data = JSON.stringify(
-    {
-    "query": "car accidents",
-    "index_id": INDEX_ID,
-    "search_options": ["visual"],
-    "operator": "and"
-  })
+```js Node.js
+data = JSON.stringify({
+  query: "car accidents",
+  index_id: INDEX_ID,
+  search_options: ["visual"],
+  operator: "and",
+});
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 <Note>
 
@@ -600,125 +524,141 @@ Note the following about this code:
    [search endpoint](/reference/api-reference/search#create-search-request),
    passing it your query parameters:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
+<CodeGroup>
 
-```
+```python Python
 response = requests.post(SEARCH_URL, headers=headers, json=data)
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
+```js Node.js
 config = {
-    method: 'post',
-    url: SEARCH_URL,
-    headers: headers,
-    data: data
-}
-resp = await axios(config)
-response = await resp.data
+  method: "post",
+  url: SEARCH_URL,
+  headers: headers,
+  data: data,
+};
+resp = await axios(config);
+response = await resp.data;
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 4. Print the status code and search results:
 
-<AccordionGroup>
-  <Accordion title="Python" defaultOpen="true">
-
-```
+<CodeGroup>
+```python Python
 print (f"Status code: {response.status_code}")
 pprint (response.json())
 ```
 
-  </Accordion>
-  <Accordion title="Node.js">
-
-```
-console.log(`Status code: ${resp.status}`)
-console.log(response)
+```js Node.js
+console.log(`Status code: ${resp.status}`);
+console.log(response);
 ```
 
-  </Accordion>
-</AccordionGroup>
+</CodeGroup>
 
 The output should look similar to the following one:
 
-```
-Status code: 200
-{'data': [{'confidence': 'high',
-           'end': 492,
-           'metadata': [{'type': 'visual'}],
-           'score': 88.86,
-           'start': 486,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 216,
-           'metadata': [{'type': 'visual'}],
-           'score': 79.04,
-           'start': 210,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 180,
-           'metadata': [{'type': 'visual'}],
-           'score': 78.54,
-           'start': 176,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 382,
-           'metadata': [{'type': 'visual'}],
-           'score': 76.42,
-           'start': 376,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 348,
-           'metadata': [{'type': 'visual'}],
-           'score': 76.27,
-           'start': 342,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 504,
-           'metadata': [{'type': 'visual'}],
-           'score': 75.06,
-           'start': 498,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 430,
-           'metadata': [{'type': 'visual'}],
-           'score': 74.91,
-           'start': 424,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'mid',
-           'end': 188,
-           'metadata': [{'type': 'visual'}],
-           'score': 74.59,
-           'start': 182,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'low',
-           'end': 176,
-           'metadata': [{'type': 'visual'}],
-           'score': 72.72,
-           'start': 174,
-           'video_id': '62b3ed5cd01d61be020682ed'},
-          {'confidence': 'low',
-           'end': 218,
-           'metadata': [{'type': 'visual'}],
-           'score': 72.71,
-           'start': 216,
-           'video_id': '62b3ed5cd01d61be020682ed'}],
- 'page_info': {'limit_per_page': 10,
-               'next_page_id': 'ede1afc7-79c6-4df9-854a-1afe3535ef0d-1',
-               'page_expired_at': '2022-06-24T14:11:22Z',
-               'total_results': 24},
- 'query': 'car accidents',
- 'search_options': ['visual'],
- 'search_pool': {'index_id': '626a186f22c7851fcbe5c838',
-                 'total_count': 1,
-                 'total_duration': 1363},
- 'type': 'search_create'}
+```json Status code: 200
+{
+  "data": [
+    {
+      "confidence": "high",
+      "end": 492,
+      "metadata": [{ "type": "visual" }],
+      "score": 88.86,
+      "start": 486,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 216,
+      "metadata": [{ "type": "visual" }],
+      "score": 79.04,
+      "start": 210,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 180,
+      "metadata": [{ "type": "visual" }],
+      "score": 78.54,
+      "start": 176,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 382,
+      "metadata": [{ "type": "visual" }],
+      "score": 76.42,
+      "start": 376,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 348,
+      "metadata": [{ "type": "visual" }],
+      "score": 76.27,
+      "start": 342,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 504,
+      "metadata": [{ "type": "visual" }],
+      "score": 75.06,
+      "start": 498,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 430,
+      "metadata": [{ "type": "visual" }],
+      "score": 74.91,
+      "start": 424,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "mid",
+      "end": 188,
+      "metadata": [{ "type": "visual" }],
+      "score": 74.59,
+      "start": 182,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "low",
+      "end": 176,
+      "metadata": [{ "type": "visual" }],
+      "score": 72.72,
+      "start": 174,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    },
+    {
+      "confidence": "low",
+      "end": 218,
+      "metadata": [{ "type": "visual" }],
+      "score": 72.71,
+      "start": 216,
+      "video_id": "62b3ed5cd01d61be020682ed"
+    }
+  ],
+  "page_info": {
+    "limit_per_page": 10,
+    "next_page_id": "ede1afc7-79c6-4df9-854a-1afe3535ef0d-1",
+    "page_expired_at": "2022-06-24T14:11:22Z",
+    "total_results": 24
+  },
+  "query": "car accidents",
+  "search_options": ["visual"],
+  "search_pool": {
+    "index_id": "626a186f22c7851fcbe5c838",
+    "total_count": 1,
+    "total_duration": 1363
+  },
+  "type": "search_create"
+}
 ```
 
 For more examples, see the [Performing Searches](/guides/performing-searches)
