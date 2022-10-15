@@ -2,142 +2,78 @@
 title: "Error Codes"
 ---
 
-This page lists the most common error messages you may encounter while using the API service.
+This page lists the most common error messages you may encounter while using the
+API service.
 
 ## All Endpoints
 
-Error Codes
+| Error Codes | Message                                               |
+| ----------- | ----------------------------------------------------- |
+| 101         | Unauthorized API key                                  |
+| 102         | Missing required fields                               |
+| 103         | Unrecognized parameters                               |
+| 104         | Invalid parameter values                              |
+| 105         | If page ID is specified, other fields should be empty |
 
-Message
-
-101
-
-Unauthorized API key
-
-102
-
-Missing required fields
-
-103
-
-Unrecognized parameters
-
-104
-
-Invalid parameter values
-
-105
-
-If page ID is specified, other fields should be empty
-
-## Endpoints Using ID Values 
+## Endpoints Using ID Values
 
 Endpoints:
 
-* **GET**/**DELETE**/**PUT** `engines/{_id}`
+- **GET**/**DELETE**/**PUT** `engines/{_id}`
+- **GET**/**DELETE** `indexes/{_id}`
+- **GET** `indexes/tasks/{_id}/~`
+- **GET**/**DELETE** `indexes/videos/{_id}/~`
+- **GET** `indexes, indexes/videos, indexes/tasks`
+- **POST** `search/{_id}`
 
-* **GET**/**DELETE** `indexes/{_id}`
+| Error Codes | Message           |
+| ----------- | ----------------- |
+| 201         | ID does not exist |
 
-* **GET** `indexes/tasks/{_id}/~`
-
-* **GET**/**DELETE** `indexes/videos/{_id}/~`
-
-* **GET** `indexes, indexes/videos, indexes/tasks`
-
-* **POST** `search/{_id}`
-
-Error Codes
-
-Message
-
-201
-
-ID does not exist
-
-## Create a Video Indexing Task 
+## Create a Video Indexing Task
 
 Endpoints:
 
-* **POST** `indexes/tasks`
-
-* **POST** `indexes/tasks/transfers`
+- **POST** `indexes/tasks`
+- **POST** `indexes/tasks/transfers`
 
 ### Failed Uploads
 
-104
-
-Invaild input for transcription\_file or transcription\_url
-
-301
-
-Failed to create indexing task. Reason: Only support video file type
-
-302
-
-Failed to create indexing task. Reason: Too large resolution. Accepts resolution less than 1080p
-
-303
-
-Failed to create indexing task. Reason: Too small resolution. Accepts resolution larger than 360p
-
-304
-
-Failed to create indexing task. Reason: Too long video. Accepts video shorter than 2 hours (7,200s)
-
-305
-
-Failed to create indexing task. Reason: Too short video. Accepts video longer than (10s)
-
-306
-
-Failed to create indexing task. Reason: Audio does not exist. Rejects video without audio
-
-400
-
-Indexing task failed for unknown reason. Please contact the support email
-
-401
-
-Indexing task failed. Video file is broken
+|     |                                                                                                     |
+| --- | --------------------------------------------------------------------------------------------------- |
+| 104 | Invaild input for transcription_file or transcription_url                                           |
+| 301 | Failed to create indexing task. Reason: Only support video file type                                |
+| 302 | Failed to create indexing task. Reason: Too large resolution. Accepts resolution less than 1080p    |
+| 303 | Failed to create indexing task. Reason: Too small resolution. Accepts resolution larger than 360p   |
+| 304 | Failed to create indexing task. Reason: Too long video. Accepts video shorter than 2 hours (7,200s) |
+| 305 | Failed to create indexing task. Reason: Too short video. Accepts video longer than (10s)            |
+| 306 | Failed to create indexing task. Reason: Audio does not exist. Rejects video without audio           |
+| 400 | Indexing task failed for unknown reason. Please contact the support email                           |
+| 401 | Indexing task failed. Video file is broken                                                          |
 
 ### Video or Transcription URL is not Accessible
 
-Text
-
-Message
-
-402
-
-Indexing task failed. Reason: URL '{specified\_url}' not found
-
-403
-
-Indexing task failed. Reason: Failed to connect to URL '{specified\_url}'
+| Text | Message                                                                |
+| ---- | ---------------------------------------------------------------------- |
+| 402  | Indexing task failed. Reason: URL 'specified_url' not found            |
+| 403  | Indexing task failed. Reason: Failed to connect to URL 'specified_url' |
 
 ## Retrieve a Video Indexing Task
 
 Endpoints:
 
-* **GET** `indexes/tasks/{_id}`
+- **GET** `indexes/tasks/{_id}`
 
-Error Codes
-
-Message
-
-\-401
-
-Broken video file. (Please check your video file)
+| Error Codes | Message                                           |
+| ----------- | ------------------------------------------------- |
+| -401        | Broken video file. (Please check your video file) |
 
 ## Create a Search Request
 
 Endpoints:
 
-* **POST** `search`
+- **POST** `search`
 
-Error Codes
-
-Message
-
-\-501
-
-Unsupported search options for the given index. Allowed search options are the subset of the index options of the given index.
+| Error Codes | Message                                                                                                                        |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| -501        | Unsupported search options for the given index. Allowed search options are the subset of the index options of the given index. |

@@ -1,0 +1,63 @@
+---
+title: "Retrieve a Transcription"
+description: "Retrieve a transcription of the spoken words."
+api:
+  "GET
+  https://api.twelvelabs.io/v1/indexes/:index-id/videos/:video-id/transcription"
+---
+
+### Path Params
+
+<ParamField path="index-id" type="string" required>
+  The unique identifier of the index with which the video vector is associated.
+</ParamField>
+
+<ParamField path="video-id" type="string" required>
+  The unique identifier of the video vector to retrieve.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `_id`: The unique identifier of the video vector.
+
+- `data`: An array of objects that contains the transcription. For each time
+  range for which the API service finds spoken words, it returns an object that
+  contains the fields below:
+
+  - `start`: The start of the time range, expressed in seconds.
+  - `end`: The end of the time range, expressed in seconds.
+  - `value`: Text representing the spoken words within this time range.  
+    If the API service doesn't find any spoken words, the `data` field is set to
+    `None`.
+
+- `index_id`: The unique identifier of the index with which the video is
+  associated.
+
+- `type`: Describes the type of operation (`video_index_meta_transcription`).
+
+On failure, it contains the following fields:
+
+- `message`: A human-readable string describing the error.
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+<ResponseExample>
+
+```json
+{
+  "_id": "61e17c1c777e6caec646fa08",
+  "data": [
+    { "end": 8.86, "start": 4.34, "value": "Hello?" },
+    { "end": 10.95, "start": 9.56, "value": " Yeah," }
+  ],
+  "index_id": "61e165b061c43d6d9b73627b",
+  "type": "video_index_transcription"
+}
+```
+
+</ResponseExample>

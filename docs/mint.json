@@ -111,10 +111,42 @@
             "api-reference/indexes/delete-index"
           ]
         },
-        "api-reference/indexes-tasks",
-        "api-reference/indexes-tasks-transfers",
-        "api-reference/indexes-videos",
-        "api-reference/search",
+        {
+          "group": "Indexes/Tasks",
+          "pages": [
+            "api-reference/indexes-tasks/indexes-tasks",
+            "api-reference/indexes-tasks/create-new-video",
+            "api-reference/indexes-tasks/list-video",
+            "api-reference/indexes-tasks/retrieve-video",
+            "api-reference/indexes-tasks/retrieve-video-vector-id"
+          ]
+        },
+        {
+          "group": "Indexes/Tasks/Transfers",
+          "pages": [
+            "api-reference/indexes-tasks-transfers/indexes-tasks-transfers",
+            "api-reference/indexes-tasks-transfers/cloud-to-cloud"
+          ]
+        },
+        {
+          "group": "Indexes/Videos",
+          "pages": [
+            "api-reference/indexes-videos/indexes-videos",
+            "api-reference/indexes-videos/list-video-vectors",
+            "api-reference/indexes-videos/retrieve-video-vector",
+            "api-reference/indexes-videos/delete-video-vector",
+            "api-reference/indexes-videos/retrieve-transcription",
+            "api-reference/indexes-videos/retrieve-text-recognized",
+            "api-reference/indexes-videos/retrieve-thumbnail"
+          ]
+        },
+        {
+          "group": "Search",
+          "pages": [
+            "api-reference/search/search",
+            "api-reference/search/search-request"
+          ]
+        },
         "api-reference/error-codes",
         "api-reference/frequently-asked-questions"
       ]

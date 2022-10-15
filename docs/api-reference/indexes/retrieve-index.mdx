@@ -1,0 +1,44 @@
+---
+title: "Retrieve an Index"
+description: "Retrieve an index object"
+api: "GET https://api.twelvelabs.io/v1/indexes/:index-id"
+---
+
+### Path Params
+
+<ParamField path="index-id" type="string">
+  Unique identifier of the index to retrieve.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `data`: An object of type `index`.
+
+- `type`: Describes the type of operation (`get_index`).
+
+On failure, it contains the following fields:
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+- `message`: A human-readable string describing the error.
+
+<ResponseExample>
+
+```json{'data': {'_id': '61e165b061c43d6d9b73627b',
+          'created_at': '2022-01-14T11:59:44.197Z',
+          'engine_id': 'marengo',
+          'index_name': 'test_index_all',
+          'index_options': ['visual', 'text_in_video', 'conversation'],
+          'updated_at': '2022-01-14T13:35:24.26Z'},
+          "addons": [
+                    "thumbnail"
+	  ]
+ 'type': 'get_index'}
+```
+
+</ResponseExample>

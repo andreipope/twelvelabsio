@@ -1,15 +1,17 @@
 ---
-title: "Delete an index"
-description:
-  "Delete the specified index and all the video indexes within it. This action
-  cannot be undone."
-api: "DELETE https://api.twelvelabs.io/v1/index/:index-id"
+title: "Delete a Video Vector"
+description: "Delete the specified video vector. This action cannot be undone."
+api: "DELETE https://api.twelvelabs.io/v1/indexes/:index-id/videos/:video-id"
 ---
 
 ### Path Params
 
-<ParamField path="index-id" type="string">
-  Unique identifier of the index to retrieve.
+<ParamField path="index-id" type="string" required>
+  The unique identifier of the index with which the video vector is associated.
+</ParamField>
+
+<ParamField path="video-id" type="string" required>
+  The unique identifier of the video vector to retrieve.
 </ParamField>
 
 ### Response Schema
@@ -33,8 +35,8 @@ On failure, it contains the following fields:
 
 ```json
 {
-  "message": "Successfully deleted index '{index-id}'",
-  "type": "delete_index"
+  "message": "Succesfully deleted video index '61dea7ed6c20ec075ebba8f5'",
+  "type": "delete_video_index"
 }
 ```
 
