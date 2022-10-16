@@ -4,13 +4,21 @@ title: "Single Search Option"
 
 This section shows how to perform searches by specifying a single search option.
 
-Note that, although the example code in this guide is written in [Python](https://www.python.org) and [Node.js](https://nodejs.org/en/), the API is compatible with most programming languages, and you can also use [Postman](https://www.postman.com) or other REST clients to send requests and view responses.
+Note that, although the example code in this guide is written in
+[Python](https://www.python.org) and [Node.js](https://nodejs.org/en/), the API
+is compatible with most programming languages, and you can also use
+[Postman](https://www.postman.com) or other REST clients to send requests and
+view responses.
 
-**NOTE**: For a description of each field in the response, see the [Search](/concepts/pagination/search) page.
-
+<Note>
+  For a description of each field in the response, see the
+  [Search](/concepts/pagination/search) page.
+</Note>
 ## Visual
 
-The API service allows you to search by objects, actions, sound, movements, places, situational events, and a complex audio-visual text description. The following example searches for car accidents:
+The API service allows you to search by objects, actions, sound, movements,
+places, situational events, and a complex audio-visual text description. The
+following example searches for car accidents:
 
 <CodeGroup>
 
@@ -120,7 +128,15 @@ The output should look similar to the following one:
 
 ## Conversation
 
-The API service extracts a transcript from the video and performs an NLP analysis on the transcript. This allows you to find the exact point in your video where the specified word or phrase is mentioned. Note that you can perform both semantic searches (the API service assesses the meaning and context) and exact searches (the API service searches for exact matches of your search terms). To specify the type of search you want to perform, you can use the `conversation_option` parameter. If not specified, the default value is `semantic`. The following example performs a semantic search and returns the matches for your search term - "car accidents."
+The API service extracts a transcript from the video and performs an NLP
+analysis on the transcript. This allows you to find the exact point in your
+video where the specified word or phrase is mentioned. Note that you can perform
+both semantic searches (the API service assesses the meaning and context) and
+exact searches (the API service searches for exact matches of your search
+terms). To specify the type of search you want to perform, you can use the
+`conversation_option` parameter. If not specified, the default value is
+`semantic`. The following example performs a semantic search and returns the
+matches for your search term - "car accidents."
 
 <CodeGroup>
 
@@ -431,7 +447,9 @@ The output should look similar to the following one:
 
 ## Text in Video
 
-The API service performs a text recognition (OCR) of each frame. This allows you to search for text that appears in the video. The following example searches for text that matches "Alex Albon".
+The API service performs a text recognition (OCR) of each frame. This allows you
+to search for text that appears in the video. The following example searches for
+text that matches "Alex Albon".
 
 <CodeGroup>
 

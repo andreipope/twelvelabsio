@@ -18,7 +18,7 @@ view responses.
   - **Video resolution:** must be greater or equal than 360p and less than 1080p
     (FHD)
   - **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require
-    different options, send us an email at support\[at\]twelvelabs.io.
+    different options, send us an email at support@twelvelabs.io.
 
 - You're familiar with the concepts that are described on the
   [Understand](/understand) page.
@@ -46,7 +46,7 @@ INDEX_TASK_URL = f"{API_URL}/indexes/tasks"
 const INDEX_TASK_URL = `${API_URL}/indexes/tasks`
 ```
 
-</CodeGoup>
+</CodeGroup>
 
 2 . Read your video file. Open a stream, making sure to replace the placeholders
 surrounded by `<>` with your values:
@@ -100,8 +100,6 @@ formData.append('video_file', file_stream)
    [tasks endpoint](/reference/api-reference/indexes-tasks#creates-a-new-video-index-task)
    and store the result in a variable named `response:`
 
-</CodeGroup>
-
 <CodeGroup>
 
 ```python Python
@@ -131,8 +129,6 @@ file_param = [
 
 5. Store the ID of your task in a variable named `TASK_ID` and print the status
    code and response:
-
-</CodeGroup>
 
 <CodeGroup>
 
@@ -164,11 +160,9 @@ Status code: 200
 </CodeGroup>
 
 6. _(Optional)_ You can use the
-   [tasks/{\_id}](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.)
+   [tasks/id](/reference/api-reference/indexes-tasks#get-the-status-info-of-the-video-index-task.)
    endpoint to monitor the indexing process. Wait until the status shows as
    `ready`:
-
-</CodeGroup>
 
 <CodeGroup>
 

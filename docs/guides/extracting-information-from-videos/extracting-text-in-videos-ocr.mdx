@@ -2,25 +2,46 @@
 title: "Extracting Text In Videos (OCR)"
 ---
 
-At a high level, extracting text from a video (OCR) involves the following steps:
+At a high level, extracting text from a video (OCR) involves the following
+steps:
 
-- Upload and index a video. When you upload a video by calling the [indexes/tasks](/reference/api-reference/indexes-tasks) endpoint, the API service creates a [video indexing task](/reference/api-reference/indexes-tasks#create-a-new-video-indexing-task) and returns its unique identifier.
+- Upload and index a video. When you upload a video by calling the
+  [indexes/tasks](/reference/api-reference/indexes-tasks) endpoint, the API
+  service creates a
+  [video indexing task](/reference/api-reference/indexes-tasks#create-a-new-video-indexing-task)
+  and returns its unique identifier.
 
-- Retrieve the unique identifier of your video vector. Once the API service finishes indexing your video, it stores all the information it needs to perform searches as video vectors. You can retrieve the unique identifier of the video vector by calling the [/indexes/tasks/:task-id](/reference/api-reference/indexes-tasks#retrieve-a-video-vector-id-based-on-a-task-id) endpoint and passing it the unique identifier of your video indexing task.
+- Retrieve the unique identifier of your video vector. Once the API service
+  finishes indexing your video, it stores all the information it needs to
+  perform searches as video vectors. You can retrieve the unique identifier of
+  the video vector by calling the
+  [/indexes/tasks/:task-id](/reference/api-reference/indexes-tasks#retrieve-a-video-vector-id-based-on-a-task-id)
+  endpoint and passing it the unique identifier of your video indexing task.
 
-- Extract the text that appears in your video. Use the [indexes/:index-id/videos/:video-id/text-in-video](/reference/api-reference/indexes-videos#retrieve-text-recognized-in-a-video-ocr) endpoint passing it the unique identifiers of your index and video vector.
+- Extract the text that appears in your video. Use the
+  [indexes/:index-id/videos/:video-id/text-in-video](/reference/api-reference/indexes-videos#retrieve-text-recognized-in-a-video-ocr)
+  endpoint passing it the unique identifiers of your index and video vector.
 
-Note that, although the example code in this guide is written in [Python](https://www.python.org) and [Node.js](https://nodejs.org/en/), the API is compatible with most programming languages, and you can also use [Postman](https://www.postman.com) or other REST clients to send requests and view responses.
+Note that, although the example code in this guide is written in
+[Python](https://www.python.org) and [Node.js](https://nodejs.org/en/), the API
+is compatible with most programming languages, and you can also use
+[Postman](https://www.postman.com) or other REST clients to send requests and
+view responses.
 
 ## Prerequisites
 
-- You're familiar with the concepts that are described on the [Understand](/understand) page.
+- You're familiar with the concepts that are described on the
+  [Understand](/understand) page.
 
-- You've already uploaded a video. The unique identifiers of your index and video indexing task are stored in two variables named `INDEX_ID` and `TASK_ID`. For instructions, see the [Uploading Videos](/guides/uploading-videos) page.
+- You've already uploaded a video. The unique identifiers of your index and
+  video indexing task are stored in two variables named `INDEX_ID` and
+  `TASK_ID`. For instructions, see the
+  [Uploading Videos](/guides/uploading-videos) page.
 
 ## Retrieve the Unique Identifier of Your Video Vector
 
-1. Construct the URL for retrieving the unique identifier of your video vector based on the `TASK_ID` variable:
+1. Construct the URL for retrieving the unique identifier of your video vector
+   based on the `TASK_ID` variable:
 
 <CodeGroup>
 
@@ -34,7 +55,8 @@ const VIDEO_VECTOR_ID_URL = `${API_URL}/indexes/tasks/${TASK_ID}/video-id`;
 
 </CodeGroup>
 
-2. Retrieve the unique identifier of your video vector and store it in a variable named `VIDEO_ID`:
+2. Retrieve the unique identifier of your video vector and store it in a
+   variable named `VIDEO_ID`:
 
 <CodeGroup>
 
@@ -78,7 +100,8 @@ console.log(`Task ID ${TASK_ID} -> Video ID ${VIDEO_ID}`);
 
 ## Retrieve Text Recognized in a Video
 
-1. Construct the URL for retrieving the text recognized in your video based on the `INDEX_ID` and `VIDEO_ID` variables:
+1. Construct the URL for retrieving the text recognized in your video based on
+   the `INDEX_ID` and `VIDEO_ID` variables:
 
 <CodeGroup>
 
@@ -227,7 +250,9 @@ The output should look similar to the following one:
 'type': 'video_index_meta_text_in_video'}
 ```
 
-Note that you can use the `start` and `end` query parameters to specify the time range for which you want to retrieve the text. The following example URL retrieves the text for the first 10 seconds of the video:
+Note that you can use the `start` and `end` query parameters to specify the time
+range for which you want to retrieve the text. The following example URL
+retrieves the text for the first 10 seconds of the video:
 
 <CodeGroup>
 

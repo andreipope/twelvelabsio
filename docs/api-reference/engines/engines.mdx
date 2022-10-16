@@ -12,7 +12,6 @@ The `engine` object has the following elements:
 - `allowed_index_options:` An array of strings representing the supported
   indexing options. For details, see the
   [Indexing Options](/concepts/indexing-options) page.
-
 - `author`: Indicates who created the index.
 
 - `created_at`: A string representing the date and time, in the
@@ -29,48 +28,3 @@ The `engine` object has the following elements:
   engine was updated.
 
 - `type`: Specifies the type of resource (`engine`)
-
-## List Search Engines
-
-get
-
-https://api.twelvelabs.io/v1
-
-/engines
-
-List search engines
-
-### Response Schema
-
-The response is in JSON format. It contains the following fields:
-
-- `data`: An array that contains the engines.
-
-- `type`: Describes the type of operation (`engine_list`).
-
-## Retrieve a Search Engine
-
-get
-
-https://api.twelvelabs.io/v1
-
-/engines/:engine-id
-
-Retrieve a search engine
-
-### Response Schema
-
-The response is in JSON format.
-
-On success, it contains an `engine` object.
-
-On failure, it contains the following fields:
-
-- `error_code`: Represents the code associated with the error. See the
-  [Error Codes](/reference/api-reference/error-codes) page for details.
-
-- `message`: A human-readable string describing the error.
-
-## Related Topics
-
-- [Search Engines](/concepts/search-engines)

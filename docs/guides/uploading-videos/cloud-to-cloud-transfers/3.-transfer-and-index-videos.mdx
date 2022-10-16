@@ -2,17 +2,23 @@
 title: "3. Transfer and Index Videos"
 ---
 
-This guide shows how to transfer the files from your AWS S3 bucket to Twelve Labs and index them.
+This guide shows how to transfer the files from your AWS S3 bucket to Twelve
+Labs and index them.
 
-**NOTE**: The API service checks for duplicate files using hashes and will not upload the same video to the same index twice.
+<Note>
+  The API service checks for duplicate files using hashes and will not upload
+  the same video to the same index twice.
+</Note>
 
 ## Prerequisites
 
 - You already downloaded the list of files in your AWS S3 bucket.
 
 - Your videos must meet the following requirements:
-  - **Video resolution:** must be greater or equal than 360p and less than 1080p (FHD)
-  - **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require different options, send us an email at `support[at]twelvelabs.io`.
+  - **Video resolution:** must be greater or equal than 360p and less than 1080p
+    (FHD)
+  - **Duration**: must be between 15 seconds and 2 hours (7,200s) If you require
+    different options, send us an email at `support[at]twelvelabs.io`.
 
 ## Recommendations
 
@@ -20,92 +26,93 @@ This guide shows how to transfer the files from your AWS S3 bucket to Twelve Lab
 
 ## Procedure
 
-1. Declare the [indexes/tasks/transfers](/reference/api-reference/indexes-tasks-transfers) endpoint:
+1. Declare the
+   [indexes/tasks/transfers](/reference/api-reference/indexes-tasks-transfers)
+   endpoint:
 
-Python
+<CodeGroup>
 
-Node.js
-
+```python Python
 INDEXES_TASKS_TRANSFERS_URL \= f"{API_URL}/indexes/tasks/transfers"
+```
 
+```json Node.js
 const INDEXES_TASKS_TRANSFERS_URL \= \`${API_URL}/indexes/tasks/transfers\`
+```
 
-2. Read your JSON file. Open a stream making sure to replace the placeholders surrounded by `<>` with your values:
+</CodeGroup>
 
-Python
+2. Read your JSON file. Open a stream making sure to replace the placeholders
+   surrounded by `<>` with your values:
 
-Node.js
+<CodeGroup>
 
+```python Python
 file_path \= "<YOUR_FILE_PATH>"
-
 file_name \= "<YOUR_FILE_NAME>"
-
 file_stream \= open(file_path, "rb")
+```
 
+```json Node.js
 const file_path \= '<YOUR_FILE_PATH>'
-
 const file_stream \= fs.createReadStream(file_path)
+```
 
-3. If you're using Python, store the file to upload in an array named `file_param` and specify that you want to make a `multipart/form-data` request. If you're using Node.js, store the file to upload in a variable named `formData` of type `FormData`:
+</CodeGroup>
 
-Python
+3. If you're using Python, store the file to upload in an array named
+   `file_param` and specify that you want to make a `multipart/form-data`
+   request. If you're using Node.js, store the file to upload in a variable
+   named `formData` of type `FormData`:
 
-Node.js
+<CodeGroup>
 
-file_param \= \[
+```python Python
+file_param = [
+    ("file", (file_name, file_stream, "multipart/form-data")),
+]
+```
 
-("file", (file_name, file_stream, "multipart/form-data")),
-
-\]
-
-let formData \= new FormData()
-
+```json Node.js
+let formData = new FormData()
 formData.append('file', file_stream)
+```
 
-4. Upload the JSON file. Call the [indexes/tasks/transfer](/reference/api-reference/indexes-tasks-transfers) endpoint, store the result in a variable named `response`, and print the status code and response:
+</CodeGroup>
 
-Python
+4. Upload the JSON file. Call the
+   [indexes/tasks/transfer](/reference/api-reference/indexes-tasks-transfers)
+   endpoint, store the result in a variable named `response`, and print the
+   status code and response:
 
-Node.js
+<CodeGroup>
 
-requests.post(INDEXES_TASKS_TRANSFERS_URL, headers\=headers, files\=file_param)
-
+```python Python
+requests.post(INDEXES_TASKS_TRANSFERS_URL, headers=headers, files=file_param)
 print (f"Status code: {response.status_code}")
-
 pprint (response.json())
+```
 
-let config \= {
-
-method: 'post',
-
-url: INDEXES_TASKS_TRANSFERS_URL,
-
-headers: headers,
-
-data : formData,
-
+```json Node.js
+let config = {
+    method: 'post',
+    url: INDEXES_TASKS_TRANSFERS_URL,
+    headers: headers,
+    data : formData,
 };
-
-resp \= await axios(config)
-
-response \= await resp.data
-
-console.log(\`Status code: ${resp.status}\`)
-
+resp = await axios(config)
+response = await resp.data
+console.log(`Status code: ${resp.status}`)
 console.log(response)
+```
+
+</CodeGroup>
 
 The output should look similar to the following one:
 
-Status code: 200
-
+```json Status code: 200
 {
-
-'message': 'Succesfully requested indexing task',
-
-'type': 'index_task_create'
-
+  "message": "Succesfully requested indexing task",
+  "type": "index_task_create"
 }
-
-## Related Topics
-
-- [Indexes/Tasks/Transfers](/reference/api-reference/indexes-tasks-transfers)
+```

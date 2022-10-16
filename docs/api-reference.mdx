@@ -2,13 +2,19 @@
 title: "API Overview"
 ---
 
-Use the Twelve Labs Video Understanding API to extract information from your videos and make it available to your applications. The API is organized around REST and returns responses in the JSON format. It is compatible with most programming languages, and you can also use Postman or other REST clients to send requests and view responses.
+Use the Twelve Labs Video Understanding API to extract information from your
+videos and make it available to your applications. The API is organized around
+REST and returns responses in the JSON format. It is compatible with most
+programming languages, and you can also use Postman or other REST clients to
+send requests and view responses.
 
 ## Call an Endpoint
 
 To call an endpoint, you must construct a URL similar to the following one:
 
+```
 {Method} {BaseURL}/{version}/{resource}/{path_parameters}?{query_parameters}
+```
 
 The list below describes each component of a request:
 
@@ -18,7 +24,8 @@ The list below describes each component of a request:
   - `POST`: Creates a new object or performs an action.
   - `PUT`: Updates an object.
   - `DELETE:` Deletes an object.  
-    Note that the `POST` and `PUT` methods require you to pass a request body containing additional parameters.
+    Note that the `POST` and `PUT` methods require you to pass a request body
+    containing additional parameters.
 
 - **Base URL**: The base URL of the API is `https://api.twelvelabs.io`.
 
@@ -26,15 +33,21 @@ The list below describes each component of a request:
 
 - **Resource**: The name of the resource you want to interact with.
 
-- **Path Parameters**: Allow you to indicate a specific object. For example, you can retrieve details about an engine or index.
+- **Path Parameters**: Allow you to indicate a specific object. For example, you
+  can retrieve details about an engine or index.
 
-- **Query Parameters**: Any parameters that an endpoint accepts. For example, you can [filter](/concepts/filtering) or [sort](/concepts/sorting) a response using query parameters.
+- **Query Parameters**: Any parameters that an endpoint accepts. For example,
+  you can [filter](/concepts/filtering) or [sort](/concepts/sorting) a response
+  using query parameters.
 
-Note that the API requires you to pass a header parameter containing your API key to authenticate each request. For details, see the [Authentication](/guides/authentication) page.
+Note that the API requires you to pass a header parameter containing your API
+key to authenticate each request. For details, see the
+[Authentication](/guides/authentication) page.
 
 ## Endpoints
 
-The sections below contain reference documentation for the endpoints that constitute the Twelve Labs Video Video Understanding API:
+The sections below contain reference documentation for the endpoints that
+constitute the Twelve Labs Video Video Understanding API:
 
 [Engines](/api-reference/engines)
 
