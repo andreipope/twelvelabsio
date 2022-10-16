@@ -47,7 +47,6 @@ search option matches:
 <CodeGroup>
 
 ```python Python
-
 SEARCH_URL = f"{API_URL}/search"
 data = {
     "query": "car accident",
@@ -58,7 +57,6 @@ data = {
 response = requests.post(SEARCH_URL, headers=headers, json=data)
 print (f"Status code: {response.status_code}")
 pprint (response.json())
-
 ```
 
 ```json Node.js
@@ -297,8 +295,9 @@ data = {
 response = requests.post(SEARCH_URL, headers=headers, json=data)
 print (f"Status code: {response.status_code}")
 pprint (response.json())
-
 ```
+
+````
 
 ```json Node.js
 const SEARCH_URL = `${API_URL}/search`
@@ -319,7 +318,7 @@ const resp = await axios(config)
 const response = await resp.data
 console.log(`Status code: ${resp.status}`)
 console.log(response)
-```
+````
 
 </CodeGroup>
 
@@ -444,8 +443,9 @@ data = {
 response = requests.post(SEARCH_URL, headers=headers, json=data)
 print (f"Status code: {response.status_code}")
 pprint (response.json())
-
 ```
+
+````
 
 ```json Node.js
 
@@ -467,7 +467,7 @@ const resp = await axios(config)
 const response = await resp.data
 console.log(`Status code: ${resp.status}`)
 console.log(response)
-```
+````
 
 </CodeGroup>
 
