@@ -133,7 +133,7 @@
         {
           "group": "Engines",
           "pages": [
-            "api-reference/engines/engines",
+            "api-reference/engines",
             "api-reference/engines/list-search-engines",
             "api-reference/engines/retrieve-search-engine"
           ]
@@ -141,7 +141,7 @@
         {
           "group": "Indexes",
           "pages": [
-            "api-reference/indexes/indexes",
+            "api-reference/indexes",
             "api-reference/indexes/create-index",
             "api-reference/indexes/list-index",
             "api-reference/indexes/retrieve-index",
@@ -152,7 +152,7 @@
         {
           "group": "Indexes/Tasks",
           "pages": [
-            "api-reference/indexes-tasks/indexes-tasks",
+            "api-reference/indexes-tasks",
             "api-reference/indexes-tasks/create-new-video",
             "api-reference/indexes-tasks/list-video",
             "api-reference/indexes-tasks/retrieve-video",
@@ -162,14 +162,14 @@
         {
           "group": "Indexes/Tasks/Transfers",
           "pages": [
-            "api-reference/indexes-tasks-transfers/indexes-tasks-transfers",
+            "api-reference/indexes-tasks-transfers",
             "api-reference/indexes-tasks-transfers/cloud-to-cloud"
           ]
         },
         {
           "group": "Indexes/Videos",
           "pages": [
-            "api-reference/indexes-videos/indexes-videos",
+            "api-reference/indexes-videos",
             "api-reference/indexes-videos/list-video-vectors",
             "api-reference/indexes-videos/retrieve-video-vector",
             "api-reference/indexes-videos/delete-video-vector",
@@ -181,7 +181,7 @@
         {
           "group": "Search",
           "pages": [
-            "api-reference/search/search",
+            "api-reference/search",
             "api-reference/search/search-request"
           ]
         },
