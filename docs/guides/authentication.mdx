@@ -1,22 +1,20 @@
 ---
 title: "Authentication"
+description: "The API uses keys for authentication, and your key is similar to a password."
 ---
 
-The API uses keys for authentication, and your key is similar to a password.
-Avoid distributing your API key to other users, or hard-coding it. Generate a
-new key whenever you think your account may have been compromised.
+<Warning>
+  Avoid distributing your API key to other users, or hard-coding it. Generate a
+  new key whenever you think your account may have been compromised.
+</Warning>
 
 For security reasons, your API key automatically expires every two months. When
 your key has expired, you must generate a new one to continue using the API.
 
 <Note>
-
-- If your policies require you to rotate keys more often, you can always
-  generate a new key.
-
-- If you want to pause using the API without deleting your account, you can
-  revoke your API key.
-
+  If your policies require you to rotate keys more often, you can always
+  generate a new key. If you want to pause using the API without deleting your
+  account, you can revoke your API key.
 </Note>
 
 The process of managing your API key can be divided into the following tasks:
@@ -66,39 +64,39 @@ print (f'Status code: {response.status_code}')
 pprint (response.json())
 ```
 
-```json Node.js
+```javascript Node.js
 // Retrieve your API key from an environment variable named `API_KEY`
-const API_KEY = process.env.API_KEY
-if (typeof API_KEY === 'undefined') {
-  console.log('API_KEY is not defined.')
-  process.exit(1)
+const API_KEY = process.env.API_KEY;
+if (typeof API_KEY === "undefined") {
+  console.log("API_KEY is not defined.");
+  process.exit(1);
 }
 
 // Declare the `headers` object containing your API key
 const headers = {
-  'x-api-key': process.env.API_KEY
-}
+  "x-api-key": process.env.API_KEY,
+};
 
-const INDEXES_URL = `${API_URL}/indexes`
-const INDEX_NAME = '<YOUR_INDEX_NAME>'
+const INDEXES_URL = `${API_URL}/indexes`;
+const INDEX_NAME = "<YOUR_INDEX_NAME>";
 let data = JSON.stringify({
-  "engine_id": "marengo",
-  "index_options": ["visual", "conversation", "text_in_video"],
-  "index_name": INDEX_NAME
-})
+  engine_id: "marengo",
+  index_options: ["visual", "conversation", "text_in_video"],
+  index_name: INDEX_NAME,
+});
 let config = {
-  method: 'post',
+  method: "post",
   url: INDEXES_URL,
   headers: headers,
-  data : data
-}
+  data: data,
+};
 
 // Make a POST request to the `indexes` endpoint, passing the `x-api-key` header parameter
-let resp = await axios(config)
-let response = await resp.data
-const INDEX_ID = response._id
-console.log(`Status code: ${resp.status}`)
-console.log(response)
+let resp = await axios(config);
+let response = await resp.data;
+const INDEX_ID = response._id;
+console.log(`Status code: ${resp.status}`);
+console.log(response);
 ```
 
 </CodeGroup>
@@ -106,10 +104,10 @@ console.log(response)
 If your key has expired or is invalid, the response should look similar to the
 following:
 
-```
+```json
 {
-    "code": 401,
-    "error": "token is not valid",
-    "message": "Please provide a valid token"
+  "code": 401,
+  "error": "token is not valid",
+  "message": "Please provide a valid token"
 }
 ```

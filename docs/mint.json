@@ -1,8 +1,8 @@
 {
   "name": "Twelve Labs",
   "logo": {
-    "light": "/images/logo.png",
-    "dark": "/images/logo.png"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
@@ -10,7 +10,10 @@
     "light": "#F3D786",
     "dark": "#181414",
     "ultraLight": "#FEFAF1",
-    "ultraDark": "#0B0101"
+    "ultraDark": "#0B0101",
+    "background": {
+      "dark": "#111111"
+    }
   },
   "api": {
     "baseUrl": "https://api.twelvelabs.io",
@@ -20,19 +23,18 @@
   },
   "topbarLinks": [
     {
+      "name": "Request a Demo",
+      "url": "https://twelvelabs.typeform.com/to/kCxXwqzq?typeform-source=twelvelabs.io"
+    },
+    {
       "name": "Contact Us",
       "url": "mailto:support@twelvelabs.zendesk.com"
     }
   ],
-  "topbarCtaButton": {
-    "name": "Request a Demo",
-    "url": "https://twelvelabs.typeform.com/to/kCxXwqzq?typeform-source=twelvelabs.io"
-  },
   "anchors": [
     {
-      "name": "API Docs",
+      "name": "API Reference",
       "icon": "rectangle-terminal",
-      "color": "#222222",
       "url": "api-reference"
     }
   ],
