@@ -1,0 +1,159 @@
+---
+title: "1. Set Up an Integration"
+---
+
+An integration grants Twelve Labs access to read the files in your S3 bucket.
+Before you can use the cloud-to-cloud transfer feature, you must set up an
+integration by following the steps in this guide.
+
+## Prerequisites
+
+- Before starting this procedure, make sure you have the following information
+  available:
+
+  - Your AWS account ID. For instructions, see the
+    [Finding Your AWS Account ID](https://docs.aws.amazon.com/IAM/latest/UserGuide/console%5Faccount-alias.html#FindingYourAWSId)
+    section of the AWS documentation
+  - The name of your bucket
+
+- Your bucket must be in the `us-west-2` region.
+
+## Procedure
+
+1 . Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+2\. From the sidebar, choose **Integrations**. Then, select **Add Integration**
+\> **AWS S3**:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/add-integration-aws-s3.png)
+
+3\. In the **Integrate AWS S3** modal, enter your AWS ID and bucket name. Then,
+select the **Next** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/integrate-aws-s3-select-next-2.png)
+
+### Create an AWS Policy
+
+1\. Open the
+[IAM Dashboard](https://us-east-1.console.aws.amazon.com/iam/home#/home) page.
+
+2\. From the sidebar, choose **Policies**. Then, select the **Create Policy**
+button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/iam-console-select-create-policy-2.png)
+
+3. Select the **JSON** tab:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/create-policiy-select-json-tab.png)
+
+4\. Move to the **Twelve Labs Dashboard** page, and copy the JSON snippet under
+**Step 1 : Create Policy**:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/step-1-create-policy-copy-json-2.png)
+
+5\. Move to the **IAM Dashboard** page, and replace the content of the **JSON**
+tab with the snippet you've copied in the previous step. Then, select the
+**Next: Tags** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-next-tags.png)
+
+6\. _(Optional)_ On the **Add Tags** page, add any tags you want to associate
+with the policy. Then, select the **Next: Review** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-next-review.png)
+
+7\. On the **Review Policy** page, set the name of the policy to
+"TwelvelabsIntegrationPolicy" and enter a brief description. Then, select the
+**Create Policy** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-create-policy.png)
+
+<Note>
+  Do not change the name of the policy. If you rename the policy, the
+  integration will not work.
+</Note>
+
+8\. On the **Policies** page, make sure that the system displays your new
+policy:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/make-sure-your-policy-is-displayed.png)
+
+<Note>
+  If the system does not display your policy, review the steps in this section,
+  making sure all the information you entered is correct.:
+</Note>
+
+### Create an AWS Role
+
+1. From the sidebar, choose **Roles**. Then, select the **Create Role** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-roles-create-role.png)
+
+2. Under **Trusted Entity Type**, select **Custom Trust Policy**:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-custom-trust-policy.png)
+
+3\. Move to the **Twelve Labs Dashboard** page, and copy the JSON snippet under
+**Step 2 : Create Role**:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/step-2-create-role-copy-json.png)
+
+4\. Move to the **IAM Dashboard** page, and replace the content of the **Custom
+trust policy** box with the snippet you've copied in the previous step. Then,
+select the **Next** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/paste-trust-policy-and-select-next.png)
+
+5\. On the **Add Permissions** page, select the policy you've created in the
+previous section. Then, select the **Next** button at the bottom-right corner of
+the page:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-twelve-labs-integration-policy.png)
+
+6\. On the **Name, Review, and Create** page, set the name of the role to
+`TwelvelabsIntegrationRole` and enter a brief description. Then, select the
+**Create Role** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/name-review-and-create.png)
+
+<Note>
+  Do not change the name of the role. If you rename the role, the integration
+  will not work.
+</Note>
+
+7. On the **Roles** page, make sure that the system displays your new role:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/make-sure-your-role-has-been-created.png)
+
+<Note>
+  If the system does not display your role, review the steps in this section,
+  making sure all the information you entered is correct.
+</Note>
+
+### Verify Your Integration Configuration
+
+1\. Move to the Twelve Labs dashboard. Under **Step 3 : Check Verification**,
+select the **Verify My Account** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-verify-my-account.png)
+
+If everything went well, you should see a message saying "Verification
+successful!":
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/verification-successful.png)
+
+2. Select the **Done** button:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/select-done.png)
+
+3\. On the **Connected Integrations** page, make sure that the status of your
+new integration shows as **Active**:
+
+![](/images/guides/uploading-videos/cloud-to-cloud-transfers/status-active.png)
+
+<Note>
+  When the status of your integration shows as **Active**, it means that the API
+  service can access the videos in your S3 bucket. If the status does not show
+  as **Active**, review the steps in this section, making sure all the
+  information you entered is correct.
+</Note>

@@ -1,0 +1,51 @@
+---
+title: "Retrieve a Search Engine"
+api: "GET https://api.twelvelabs.io/v1/engines/{engine-id}"
+---
+
+### Path Params
+
+<ParamField path="engine_id" type="string">
+  The identifier of the engine to retrieve. The following search engines are
+  available: - `marengo2` - `marengo` For details about the features of each
+  search engine, see the [Search Engines](/concepts/search-engines) page.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains an `engine` object.
+
+On failure, it contains the following fields:
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+- `message`: A human-readable string describing the error.
+
+<ResponseExample>
+
+```json
+{
+  "created_at": "2022-07-04 03:05:27.068 +0000 UTC",
+  "updated_at": "2022-07-04 03:05:27.068 +0000 UTC",
+  "_id": "marengo2",
+  "author": "twelve_labs",
+  "finetune": false,
+  "type": "engine",
+  "ready": true,
+  "allowed_index_options": [
+    "visual",
+    "text_in_video",
+    "conversation",
+    "thumbnail"
+  ]
+}
+```
+
+</ResponseExample>
+
+### Related Topics
+
+- [Search Engines](/concepts/search-engines)

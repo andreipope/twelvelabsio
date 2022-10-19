@@ -1,0 +1,59 @@
+---
+title: "Manage Webhooks"
+---
+
+This topic explains how you can use the **Webhooks** section of the **Dashboard** to manage your webhooks and retrieve your secret keys.
+
+Note that, for each webhook, the API service tracks the status of your endpoint and displays it in the **Status** column. The API service uses the following statuses:
+
+- **Not Executed**: A notification has not yet been sent to your endpoint.
+
+- **Success**: Your endpoint responded with a `2xx` code to the latest notification.
+
+- **Failed**: Your endpoint failed to respond with a `2xx` code to the latest notification. If you see this status, review the information in the [Requirements for Processing Notifications](/guides/webhooks/requirements-for-processing-notifications) section.
+
+## Register a Webhook
+
+Before you can receive notifications, you must first register your endpoint by following the steps below:
+
+1. Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+2. From the sidebar, choose **Settings**.
+
+3. Under **Webhooks**, select the **Add Endpoint** button.
+
+4. In the **Add webhook endpoint** modal, enter the URL of your endpoint and a brief description.
+
+5. When you've finished, select the **Add** button. Note that the status will show as `Not Executed` until the API sends the first request to your endpoint and receives a `2xx` response.
+
+## Remove a Webhook
+
+When a webhook is no longer needed, you can remove it.
+
+1. Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+2. From the sidebar, choose **Settings**.
+
+3. Under **Webhooks**, find the webhook that you want to remove. Then, select the trash icon located at the far right end of the row.
+
+## Enable or Disable a Webhook
+
+This section explains how you can temporarily suspend and then reactivate notifications.
+
+1. Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+2. From the sidebar, choose **Settings**.
+
+3. Under **Webhooks**, find the webhook that you want to enable or disable. Then, use the toggle under **Enabled** to enable or disable the webhook.
+
+## Retrieve Your Secret Key
+
+Twelve Labs signs the notifications it sends to your endpoint by including a signature in each notification. Before you can verify signatures, you must retrieve your secret key from the **Settings** section of the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+1. Go to the [Dashboard](https://api.twelvelabs.io/dashboard) page.
+
+2. From the sidebar, choose **Settings**.
+
+3. Under **Webhooks**, find your webhook and select the **Reveal Secret** button.
+
+4. Select the copy icon located at the right of the secret key.

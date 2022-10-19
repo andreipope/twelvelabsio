@@ -1,0 +1,68 @@
+---
+title: "Create an Index"
+api: "POST https://api.twelvelabs.io/v1/indexes"
+---
+
+### Body Params
+
+<ParamField body="engine-id" type="integer" required>
+  Specifies the search engine. The following options are available: - marengo2 -
+  marengo
+  <Note>
+  
+    - Twelve Labs strongly recommends you use marengo2.
+    - You cannot change the engine once the index has been created.
+
+  </Note>
+</ParamField>
+
+<ParamField body="index_options" type="integer" required>
+  Must be a subset of [visual, conversation, text_in_video].
+  <Note>
+
+    - The indexing options cannot be changed once the index has been created.
+    - The types of searches you can perform on this index are a subset of the indexing options.
+
+  </Note>
+</ParamField>
+
+<ParamField body="index_name" type="list" required>
+  The name of the index. Make sure you use a succinct and descriptive name.
+</ParamField>
+
+<ParamField body="addons" type="list" required>
+  The list of add-ons that are enabled for this index. To enable thumbnail
+  generation for an index, set this parameter to `thumbnail`.
+  <Note>You cannot disable thumbnails once the index has been created.</Note>
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `_id`: Represents the unique identifier of the `index` object.
+
+- `message`: A human-readable string describing the result.
+
+- `type`: Describes the type of operation (`index_create`).
+
+On failure, it contains the following fields:
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+- `message`: A human-readable string describing the error.
+
+<ResponseExample>
+
+```json
+{
+  "type": "create_index",
+  "_id": "{index_id}",
+  "message": "Succesfully created index 'test index'"
+}
+```
+
+</ResponseExample>

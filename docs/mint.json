@@ -1,15 +1,15 @@
 {
-  "name": "React Email",
+  "name": "Twelve Labs",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#20232A",
-    "light": "#81D7F7",
-    "dark": "#161618",
-    "ultraLight": "#F2F8FB",
+    "primary": "#222222",
+    "light": "#F3D786",
+    "dark": "#181414",
+    "ultraLight": "#FEFAF1",
     "ultraDark": "#0B0101",
     "background": {
       "dark": "#111111"
@@ -21,47 +21,181 @@
       "method": "bearer"
     }
   },
-  "topbarCtaButton": {
-    "type": "github",
-    "url": "https://github.com/zenorocha/react-email"
-  },
-  "anchors": [
+  "topbarLinks": [
     {
-      "name": "Community",
-      "icon": "discord",
-      "url": "https://react.email/discord"
+      "name": "Request a Demo",
+      "url": "https://twelvelabs.typeform.com/to/kCxXwqzq?typeform-source=twelvelabs.io"
     },
     {
-      "name": "GitHub",
-      "icon": "github",
-      "url": "https://github.com/zenorocha/react-email"
+      "name": "Contact Us",
+      "url": "mailto:support@twelvelabs.zendesk.com"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "rectangle-terminal",
+      "url": "api-reference"
     }
   ],
   "navigation": [
     {
-      "group": "Home",
-      "pages": ["introduction", "license"]
+      "group": "Welcome",
+      "pages": ["introduction", "understand", "quickstart"]
     },
     {
-      "group": "Components",
+      "group": "Guides",
       "pages": [
-        "components/html",
-        "components/head",
-        "components/avatar",
-        "components/button",
-        "components/link",
-        "components/image",
-        "components/divider",
-        "components/paragraph",
-        "components/container",
-        "components/code",
-        "components/pre",
-        "components/preview"
+        "guides/authentication",
+        {
+          "group": "Uploading Videos",
+          "pages": [
+            "guides/uploading-videos",
+            "guides/uploading-videos/upload-from-the-local-file-system",
+            "guides/uploading-videos/upload-from-a-url",
+            {
+              "group": "Cloud-to-Cloud Transfers",
+              "pages": [
+                "guides/uploading-videos/cloud-to-cloud-transfers",
+                "guides/uploading-videos/cloud-to-cloud-transfers/1.-set-up-an-integration",
+                "guides/uploading-videos/cloud-to-cloud-transfers/2.-download-and-edit-the-list-of-videos",
+                "guides/uploading-videos/cloud-to-cloud-transfers/3.-transfer-and-index-videos",
+                "guides/uploading-videos/cloud-to-cloud-transfers/4.-manage-integrations"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Performing Searches",
+          "pages": [
+            "guides/performing-searches",
+            "guides/performing-searches/single-search-option",
+            "guides/performing-searches/multiple-search-options"
+          ]
+        },
+        {
+          "group": "Providing Your Custom Transcriptions",
+          "pages": [
+            "guides/providing-your-custom-transcriptions",
+            "guides/providing-your-custom-transcriptions/providing-transcriptions-from-the-local-file-system",
+            "guides/providing-your-custom-transcriptions/providing-transcriptions-from-urls",
+            "guides/providing-your-custom-transcriptions/cloud-to-cloud-transfers"
+          ]
+        },
+        {
+          "group": "Extracting Information from Videos",
+          "pages": [
+            "guides/extracting-information-from-videos",
+            "guides/extracting-information-from-videos/extracting-transcriptions",
+            "guides/extracting-information-from-videos/extracting-text-in-videos-ocr"
+          ]
+        },
+        {
+          "group": "Webhooks",
+          "pages": [
+            "guides/webhooks",
+            "guides/webhooks/manage-webhooks",
+            "guides/webhooks/requirements-for-processing-notifications",
+            "guides/webhooks/notification-schema"
+          ]
+        }
       ]
+    },
+    {
+      "group": "Concepts",
+      "pages": [
+        "concepts/search-engines",
+        "concepts/indexing-options",
+        "concepts/search-options",
+        {
+          "group": "Pagination",
+          "pages": [
+            "concepts/pagination",
+            "concepts/pagination/indexes",
+            "concepts/pagination/search"
+          ]
+        },
+        "concepts/sorting",
+        {
+          "group": "Filtering",
+          "pages": [
+            "concepts/filtering",
+            "concepts/filtering/indexes",
+            "concepts/filtering/filter-search-results-based-on-metadata"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference",
+        {
+          "group": "Engines",
+          "pages": [
+            "api-reference/engines",
+            "api-reference/engines/list-search-engines",
+            "api-reference/engines/retrieve-search-engine"
+          ]
+        },
+        {
+          "group": "Indexes",
+          "pages": [
+            "api-reference/indexes",
+            "api-reference/indexes/create-index",
+            "api-reference/indexes/list-index",
+            "api-reference/indexes/retrieve-index",
+            "api-reference/indexes/update-index",
+            "api-reference/indexes/delete-index"
+          ]
+        },
+        {
+          "group": "Indexes/Tasks",
+          "pages": [
+            "api-reference/indexes-tasks",
+            "api-reference/indexes-tasks/create-new-video",
+            "api-reference/indexes-tasks/list-video",
+            "api-reference/indexes-tasks/retrieve-video",
+            "api-reference/indexes-tasks/retrieve-video-vector-id"
+          ]
+        },
+        {
+          "group": "Indexes/Tasks/Transfers",
+          "pages": [
+            "api-reference/indexes-tasks-transfers",
+            "api-reference/indexes-tasks-transfers/cloud-to-cloud"
+          ]
+        },
+        {
+          "group": "Indexes/Videos",
+          "pages": [
+            "api-reference/indexes-videos",
+            "api-reference/indexes-videos/list-video-vectors",
+            "api-reference/indexes-videos/retrieve-video-vector",
+            "api-reference/indexes-videos/delete-video-vector",
+            "api-reference/indexes-videos/retrieve-transcription",
+            "api-reference/indexes-videos/retrieve-text-recognized",
+            "api-reference/indexes-videos/retrieve-thumbnail"
+          ]
+        },
+        {
+          "group": "Search",
+          "pages": [
+            "api-reference/search",
+            "api-reference/search/search-request"
+          ]
+        },
+        "api-reference/error-codes",
+        "api-reference/frequently-asked-questions"
+      ]
+    },
+    {
+      "group": "Developer Communications",
+      "pages": ["api-changelog", "roadmap"]
     }
   ],
   "classes": {
-    "anchors": "group-hover:bg-gradient-to-tr from-primary to-primary-dark dark:from-[#61DAFB] dark:to-[#06BCEE]",
+    "anchors": "group-hover:bg-gradient-to-tr from-[#FF8D3A] to-[#B2F260]",
     "activeAnchors": "bg-gradient-to-tr"
   }
 }

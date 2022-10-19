@@ -1,0 +1,92 @@
+---
+title: "Retrieve Text Recognized in a Video (OCR)"
+api: "GET
+  https://api.twelvelabs.io/v1/indexes/{index-id}/videos/{video-id}/text-in-video"
+---
+
+### Path Params
+
+<ParamField path="index-id" type="string" required>
+  The unique identifier of the index with which the video vector is associated.
+</ParamField>
+
+<ParamField path="video-id" type="string" required>
+  The unique identifier of the video vector to retrieve.
+</ParamField>
+
+### Query Params
+
+<ParamField query="start" type="integer" required>
+  The start of the time range (in seconds) to retrieve OCRs for.
+</ParamField>
+
+<ParamField query="end" type="integer" required>
+  The end of the time range (in seconds) to retrieve OCRs for.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `_id`: The unique identifier of the video vector.
+
+- `data`: An array that contains the OCR elements. For each time range for which
+  the API service finds OCR elements, it returns an object that contains the
+  fields below:
+
+  - `start`: The start of the time range, expressed in seconds.
+  - `end`: The end of the time range, expressed in seconds.
+  - `value`: Recognized text within this time range.  
+    If the API service doesn't find any OCR elements, the `data` field is set to
+    `None`.
+
+- `index_id`: The unique identifier of the index with which the video is
+  associated.
+
+- `type`: Describes the type of operation (`video_index_meta_text_in_video`).
+
+On failure, it contains the following fields:
+
+- `message`: A human-readable string describing the error.
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+<ResponseField>
+
+```json
+{
+  "_id": "61de34726c20ec075ebba8da",
+  "data": [
+    { "end": 42, "start": 22, "value": "LIVE" },
+    { "end": 25, "start": 23, "value": "23" },
+    { "end": 43, "start": 23, "value": "sky sports" },
+    { "end": 24, "start": 23, "value": "VISITE SAO PAULO" },
+    { "end": 27, "start": 24, "value": "TED KRAVITZ" },
+    { "end": 28, "start": 27, "value": "sky" },
+    { "end": 30, "start": 29, "value": "27" },
+    { "end": 30, "start": 29, "value": "-" },
+    { "end": 41, "start": 30, "value": "23" },
+    { "end": 32, "start": 31, "value": "SÃO PAULO" },
+    { "end": 34, "start": 31, "value": "22" },
+    { "end": 33, "start": 32, "value": "29 min" },
+    { "end": 71, "start": 32, "value": "Countdown to Sprint" },
+    { "end": 33, "start": 32, "value": "36" },
+    { "end": 34, "start": 33, "value": "-" },
+    { "end": 36, "start": 33, "value": "29 min 35" },
+    { "end": 38, "start": 37, "value": "PAULO" },
+    { "end": 38, "start": 37, "value": "3" },
+    { "end": 38, "start": 37, "value": "- -" },
+    { "end": 38, "start": 37, "value": "29 min" },
+    { "end": 39, "start": 38, "value": "LO" },
+    { "end": 41, "start": 38, "value": "22" },
+    { "end": 45, "start": 39, "value": "29 min 29" }
+  ],
+  "index_id": "61dd5a686c924add18e8e818",
+  "type": "video_index_text_in_video"
+}
+```
+
+ </ResponseField>

@@ -1,0 +1,47 @@
+---
+title: "Retrieve a Video Vector ID Based on a Task ID"
+description:
+  "Provide the ID of a video indexing task, and the API service will return the
+  corresponding video ID."
+api: "GET https://api.twelvelabs.io/v1/indexes/tasks/{task-id}/video-id"
+---
+
+### Path Params
+
+<ParamField path="task-id" type="string" required>
+  The unique identifier of the video indexing task to retrieve.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `_id`: A string representing the ID of the video index. The API returns this
+  field only when the value of the `status` field is `ready`.
+
+- `exist`: A boolean specifying whether the video is ready to be searched. The
+  API service returns `true` when the value of the `status` field is `ready` and
+  `false` otherwise.
+
+- `type`: Describes the type of operation (`index_task_video_id`).
+
+On failure, it contains the following fields:
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+- `message`: A human-readable string describing the error.
+
+<ResponseExample>
+
+```json
+{
+  '_id': '629dea98f05c91527bc5c1c8',
+  'exist': True,
+  'type': 'index_task_video_id'
+}
+```
+
+</ResponseExample>

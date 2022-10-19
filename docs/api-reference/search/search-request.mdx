@@ -1,0 +1,348 @@
+---
+title: "Make a Search Request"
+api: "POST https://api.twelvelabs.io/v1/search/{next-page-id}"
+---
+
+### Path Params
+
+<ParamField path="next-page-id" type="string">
+  A token that identifies the page to retrieve. If not specified, the API
+  returns the first page.
+</ParamField>
+
+### Body Params
+
+<ParamField body="query" type="string">
+  Your search query. Note that the API supports full natural language-based
+  search. The following examples are valid queries: "birds flying near a
+  castle", "sun shining on water", "chickens on the road", "an officer holding a
+  child's hand.", "crowd cheering in the stadium."
+</ParamField>
+
+<ParamField body="index_id" type="string">
+  The unique identifier of the index to search.
+</ParamField>
+
+<ParamField body="search_options" type="list">
+
+Search options specify the source of information the API service uses when
+performing a search. The following values are supported:
+
+- `visual`: Allows you to search by objects, actions, sound, movements, places,
+  situational events, and complex audio-visual text descriptions.
+- `conversation`: Allows you to find the exact point in your video where the
+  specified word or phrase is mentioned.
+- `text_in_video`: Allows you to search for text that appears in your videos
+  (OCR). The search options you specify must be a subset of the indexing options
+  used when you created the index. You can specify multiple search options in
+  conjunction with the `operator` parameter described below to broaden or narrow
+  your search.
+
+</ParamField>
+
+<ParamField body="operator" type="string">
+
+When you specify more than one search option, you can use this parameter to
+indicate the logical operation that the API service should perform. The
+following logical operators are supported:
+
+- `or`: The API returns the results for which any search option matches.
+- `and`: The API returns only the results for which all search options match.
+
+Note that the `operator` parameter is currently in beta, and we welcome your
+feedback along the way. If you have suggestions for improving this feature,
+please send them by email to
+[support@twelvelabs.io](mailto:support@twelvelabs.io).
+
+For details and examples, see the
+[Multiple Search Options](https://docs.twelvelabs.io/guides/performing-searches/multiple-search-options)
+page. **Default**: `or`.
+
+</ParamField>
+
+<ParamField body="conversation_option">
+
+Specifies the type of search the API service will perform. The following values
+are supported:
+
+- `semantic`: The API service returns results that are semantically similar to
+  the search query even if the results don't exactly match the search query.
+- `transcription`: The API service returns only the exact matches. Note that
+  `transcription` can only be used with a single search option. For example, you
+  cannot set the `search_option` parameter to equal
+  `["visual", "conversation", "text_in_video"]` and the conversation_option
+  parameter to equal `transcription`. **Default**: `semantic`.
+
+</ParamField>
+
+<ParamField body="page_limit" type="integer">
+  The number of items to return on each page. **Default**: `10`. **Max**: `100`.
+</ParamField>
+
+<ParamField body="filter" type="object">
+
+Use the `filter` parameter to narrow the scope of your query. This parameter is
+of type `Object` and can contain one or more of the following fields:
+
+-`id`: An array of strings that restricts your search results based on the
+specified video IDs.
+
+- `duration`: A numeric field that restricts your search results based on
+  duration, expressed in seconds.
+- `width`: A numeric field that restricts your search results based on width.
+  height: A numeric field that restricts your search results based on height.
+- `size`: A numeric field that restricts your search results based on size,
+  expressed in bytes.
+
+For string fields, the `filter` parameter returns only the results that equal
+the value you specify. The following example filters on the videos whose title
+is "Animal Encounters part 1": `"title": "Animal Encounters part 1".`
+
+For numeric fields, the `filter` parameter returns the results that match based
+on the arithmetic comparison. The following example filters on the videos whose
+height is greater than or equal to 400 and less than or equal to
+500:`"height": { "gte": 400, "lte": 500 }`.
+
+For more details and examples, see the
+[Filter Search Results Based on Metadata](/concepts/filtering) page.
+
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `conversation_option`: Indicates the type of search the API performed
+  (`semantic` or `transcription`
+
+- `data`: An array that contains your search results. For each match found, the
+  search engine returns the following fields:
+
+  - `start` and `end`: Start and end time of the matching video fragment,
+    expressed in seconds.
+  - `video_id:` A string representing the unique identifier of the video vector.
+    Once the API service indexes a video, it assigns a unique identifier. Note
+    that this is different from the identifier of the video indexing task. To
+    map the identifier of a video indexing task to the identifier of a video
+    vector, you can use the `/indexes/tasks/:task-id/video-id`endpoint. For
+    details, see the
+    [Retrieve a Video Vector ID Based on a Task ID](/reference/api-reference/indexes-tasks#retrieve-a-video-vector-id-based-on-a-task-id)
+    section.
+  - `metadata`: An array that contains details about each result. It has the
+    following fields:  
+     _ `type`: A string that indicates the type of match (`visual`, `conversation`,
+    `text_in_video`).  
+     _ `text`: For `conversation` and `text_in_video`, the API returns a
+    transcription of the spoken words or the text that matches your search
+    query.
+  - `score`: A quantitative value determined by the AI engine representing the
+    similarity score between your search terms and the matching video fragment.
+  - `confidence`: A qualitative indicator measured by the internal QA team based
+    on the value of the score field. This field can take one of the following
+    values:  
+     _ `high`: For scores greater than 90 and less than 100  
+     _ `medium`: For scores greater than 80 and less than 90  
+     _ `low`: For scores greater than 70 and less than 80  
+     _ `extremely low`: For scores greater than 70 and less than 80.
+  - `thumbnail_url`: If thumbnail generation is enabled for this index, the API
+    service retrieves a thumbnail from the middle of the matching video
+    fragment. Note that the URL expires in one hour.
+
+- `page_info`: An object that provides information about pagination. It has the
+  following fields:
+
+  - `limit_per_page`: The maximum number of items on each page.
+  - `page_expired_at`: A string representing the date and time, in the
+    [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the
+    page expires.
+  - `total_result`: The total number of results.
+  - `next_page_id`: The unique identifier of the next page.
+
+- `query`: The search query you specified.
+
+- `search_options`: The search options you used.
+
+- `search_pool`: An object that contains details about the index you queried.
+
+- `type`: Describes the type of operation (`search_create`)
+
+On failure, it contains the following fields:
+
+- `message`: A human-readable string describing the error.
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+## Related Topics
+
+- [Performing Searches](/guides/performing-searches)
+
+- [Filter Search Results Based on Metadata](/concepts/filtering/filter-search-results-based-on-metadata)
+
+<ResponseExample>
+
+```json{
+	"conversation_option": "semantic",
+	"data": [
+		{
+			"score": 92.49,
+			"start": 312,
+			"end": 344,
+			"metadata": [
+				{
+					"type": "visual"
+				},
+				{
+					"type": "conversation",
+					"text": " . Now on this old pit straight can Hamilton's try and get back ahead of max Verstappen and he's trying to get a slipstream as well. Hamilton's going to try and dance around the outside for staff and stays ahead british crowd roaring their approval for this duel on the first lap of 17, trying to go around the outside of cops."
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320747274fed2f3511f2a91/625.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=1fd2fe9bd3efd0e89e32d4ac58603b5f6043c8096fb108f95864da671c2c68cc"
+		},
+		{
+			"score": 91.45,
+			"start": 36,
+			"end": 42,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 91.38,
+			"start": 220,
+			"end": 260,
+			"metadata": [
+				{
+					"type": "visual"
+				},
+				{
+					"type": "conversation",
+					"text": ". Then in second place Perez is trying to fight back Hamilton and Bottas getting involved as well on the inside there goes Lando Norris has to pull out before he hit Sergio Perez and the two Mercedes well swapping places there has got himself into a bit of a pickle but he has come out on top and ahead of his teammate Sergio Perez now turn four, trying to go the long way round the outside, his jewel continues with Lando Norris as he now goes onto the gravel and he loses six or seven places as a result of that Norris is not a man to back out, he will get his elbows out whenever he can."
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 91.02,
+			"start": 364,
+			"end": 376,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 90.47,
+			"start": 444,
+			"end": 454,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 90.29,
+			"start": 386,
+			"end": 430,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 89.64,
+			"start": 174,
+			"end": 194,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 89.52,
+			"start": 300,
+			"end": 312,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 89.2,
+			"start": 550,
+			"end": 568,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		},
+		{
+			"score": 89.16,
+			"start": 128,
+			"end": 142,
+			"metadata": [
+				{
+					"type": "visual"
+				}
+			],
+			"video_id": "62d860deb0a389f9f568cde9",
+			"confidence": "high",
+			"thumbnail_url": "https://project-one-thumbnail.s3.us-west-2.amazonaws.com/6320748774fed2f3511f2a92/50.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAYRWJPOVHXE5SJ77T%2F20220914%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220914T045113Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=d7d70562e841130533561648b75b440c93a4657a36d5622e560e25a7ddc9bd5e"
+		}
+	],
+	"page_info": {
+		"limit_per_page": 10,
+		"next_page_id": "edd92402-0329-4122-9f0c-a9c4dad5d263-1",
+		"page_expired_at": "2022-07-20T20:35:47Z",
+		"total_results": 140
+	},
+	"query": "winning the race",
+	"search_options": [
+		"conversation",
+		"visual"
+	],
+	"search_pool": {
+		"index_id": "62d85fe7340fa665f1fda5dd",
+		"total_count": 2,
+		"total_duration": 1363
+	},
+	"type": "search_create"
+}
+```
+
+</ResponseExample>

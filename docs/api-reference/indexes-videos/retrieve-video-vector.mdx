@@ -1,0 +1,76 @@
+---
+title: "Retrieve a Video Vector"
+api: "GET https://api.twelvelabs.io/v1/indexes/{index-id}/videos/{video-id}"
+---
+
+### Path Params
+
+<ParamField path="index-id" type="string" required>
+  The unique identifier of the index with which the video vector is associated.
+</ParamField>
+
+<ParamField path="video-id" type="string" required>
+  The unique identifier of the video vector to retrieve.
+</ParamField>
+
+### Response Schema
+
+The response is in JSON format.
+
+On success, it contains the following fields:
+
+- `_id`: The unique identifier of the video vector.
+
+- `created_at`: A string indicating the date and time, in the
+  [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the
+  [video indexing task](/reference/api-reference/indexes-tasks) was created.
+
+- `indexed_at`: A string indicating the date and time, in the
+  [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the
+  video has finished indexing.
+
+- `metadata`: An object that contains the following information about the video:
+
+  - `duration`
+  - `filename`
+  - `fps`
+  - `height`
+  - `size`
+  - `width`
+
+- `updated_at`: A string indicating the date and time, in the
+  [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format, that the
+  corresponding video indexing task was last updated. The API service updates
+  this field every time the corresponding video indexing task transitions to a
+  different state.
+
+- `type`: Describes the type of operation (`video_index_info`).
+
+On failure, it contains the following fields:
+
+- `error_code`: Represents the code associated with the error. See the
+  [Error Codes](/reference/api-reference/error-codes) page for details.
+
+- `message`: A human-readable string describing the error.
+
+<ResponseExample>
+
+```json
+{
+  "_id": "61e17be5777e6caec646fa07",
+  "created_at": "2022-01-14T13:34:29Z",
+  "indexed_at": "2022-01-14T14:05:55Z",
+  "metadata": {
+    "duration": 3747.841667,
+    "filename": "IOKgzkakhlk.mp4",
+    "fps": 29.97002997002997,
+    "height": 360,
+    "size": 173898769,
+    "width": 482
+  },
+  "type": "video_index_item",
+  "updated_at": "2022-01-14T13:34:29Z"
+}
+```
+
+ </ResponseExample>
