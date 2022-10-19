@@ -1,55 +1,137 @@
 ---
-title: "Introduction"
-description: "Twelve Labs Video Understanding API is an AI-powered video search solution that
-extracts information such as movement, objects, sound, text on screen, and
-speech from your videos and allows you to find specific moments using everyday
-language."
+title: "React Email"
+sidebarTitle: "Introduction"
+description: "Build and send emails using React. High-quality, unstyled components for creating emails."
 ---
 
-## Why Use Twelve Labs Video Understanding API?
+import Support from "./snippets/support.mdx";
+import License from "./snippets/license.mdx";
 
-The following sections describe the key capabilities of Twelve Labs Video
-Understanding API and compare it to other solutions.
+<img className="rounded-md" src="/images/react-email.png" />
 
-### Key Capabilities
+## Introduction
 
-Developers using Twelve Labs Video Understanding API have access to the
-following key capabilities:
+A collection of high-quality, unstyled components for creating beautiful emails using React and TypeScript.
+It reduces the pain of coding responsive emails with dark mode support. It also takes care of inconsistencies between Gmail, Outlook, and other email clients for you.
 
-- **Relevance**: Find the exact moment you need within your video library using
-  a full text-based search query.
+## Why
 
-- **Intuitive:** Integrate more than twenty state-of-the-art deep learning
-  models into your applications in three simple steps.
+We believe that email is an extremely important medium for people to communicate. However, we need to stop developing emails like 2010, and rethink how email can be done in 2022 and beyond. Email development needs a revamp. A renovation. Modernized for the way we build web apps today.
 
-- **Speed:** Receive your search results within seconds.
+## Install
 
-- **Scalability:** With Twelve Labs, your applications rely on a cloud-native
-  distributed infrastructure that can handle thousands of simultaneous indexing
-  and search requests.
+Install one of the components from your command line.
 
-<Note>
-  Twelve Labs is continuously adding new features. See the [Roadmap](/roadmap)
-  page for details.
-</Note>
+#### With yarn
 
-### Twelve Labs Video Understanding API Compared to Other Solutions
+```sh
+yarn add @react-email/button -E
+```
 
-The table below provides a basic comparison between Twelve Labs Video
-Understanding API and other cloud-based solutions:
+#### With npm
 
-![](/images/twelve-labs-compared.png)
+```sh
+npm install @react-email/button -E
+```
 
-Twelve Labs Video Understand API compared to other solutions
+## Getting started
 
-- **Use a single API** to access Twelve Labs AI-powered video search service
-  that allows you to find the information you’re looking for in your videos.
-  Focus on building your application instead of collating data from separate
-  image and speech APIs.
+Add the component to your email template. Include styles where needed.
 
-- **Write complex semantic queries in everyday language** that semantically
-  describe the exact moment you want to find in your videos instead of filtering
-  pre-generated tags.
+```jsx
+import { Button } from "@react-email/button";
 
-- **Adapt the AI model to your domain** instead of relying on a single model.
-  Note that this feature is on the [roadmap](/roadmap).
+const Email = () => {
+  return (
+    <Button href="https://example.com" style={{ color: "#61dafb" }}>
+      Click me
+    </Button>
+  );
+};
+```
+
+## Components
+
+A set of standard components to help you build amazing emails without having to deal with the mess of creating table-based layouts and maintaining archaic markup.
+
+<CardGroup>
+  <Card title="HTML" icon={regular("code")} href="/components/html">
+    A React html component to wrap emails.
+  </Card>
+  <Card title="Head" icon={regular("rectangle-code")} href="/components/head">
+    Contains head components, related to the document such as style and meta
+    elements.
+  </Card>
+  <Card title="Avatar" icon={regular("circle-user")} href="/components/avatar">
+    Displays a profile picture or a fallback to the user initials.
+  </Card>
+  <Card
+    title="Button"
+    icon={regular("rectangle-wide")}
+    href="/components/button"
+  >
+    A React button component to help build emails.
+  </Card>
+  <Card title="Link" icon={regular("link")} href="/components/link">
+    A hyperlink to web pages, files, email addresses, or anything else a URL can
+    address.
+  </Card>
+  <Card title="Image" icon={regular("image")} href="/components/image">
+    Display an image in your email.
+  </Card>
+  <Card title="Divider" icon={regular("horizontal-rule")} href="/components/hr">
+    Display a divider that separates content areas in your email.
+  </Card>
+  <Card
+    title="Paragraph"
+    icon={regular("align-justify")}
+    href="/components/text"
+  >
+    A block of text separated by blank spaces.
+  </Card>
+  <Card
+    title="Container"
+    icon={regular("objects-column")}
+    href="/components/container"
+  >
+    The main wrapper that hold your content.
+  </Card>
+  <Card title="Code" icon={regular("rectangle-code")} href="/components/code">
+    A block of code to be rendered in your email.
+  </Card>
+  <Card title="Pre" icon={regular("code-simple")} href="/components/pre">
+    A block of preformatted text in your email
+  </Card>
+  <Card
+    title="Preview"
+    icon={regular("magnifying-glass")}
+    href="/components/preview"
+  >
+    A preview text that will be displayed in the inbox of the recipient.
+  </Card>
+</CardGroup>
+
+<Support />
+
+## Development
+
+#### Install dependencies
+
+```sh
+yarn install
+```
+
+#### Build and run packages
+
+```sh
+yarn dev
+```
+
+This will initialize all packages in parallel and watch for changes, including the website which will be available at [localhost:3000](http://localhost:3000).
+
+## Authors
+
+- Bu Kinoshita ([@bukinoshita](https://twitter.com/bukinoshita))
+- Zeno Rocha ([@zenorocha](https://twitter.com/zenorocha))
+
+<License />
