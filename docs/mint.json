@@ -99,7 +99,8 @@
             "guides/webhooks/notification-schema"
           ]
         }
-      ]
+      ],
+      "version": "Version 2"
     },
     {
       "group": "Concepts",
@@ -124,7 +125,13 @@
             "concepts/filtering/filter-search-results-based-on-metadata"
           ]
         }
-      ]
+      ],
+      "version": "Version 2"
+    },
+    {
+      "group": "Developer Communications",
+      "pages": ["api-changelog", "roadmap"],
+      "version": "Version 1"
     },
     {
       "group": "API Reference",
@@ -188,10 +195,6 @@
         "api-reference/error-codes",
         "api-reference/frequently-asked-questions"
       ]
-    },
-    {
-      "group": "Developer Communications",
-      "pages": ["api-changelog", "roadmap"]
     }
   ],
   "classes": {
