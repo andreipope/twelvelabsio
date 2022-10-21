@@ -38,12 +38,14 @@
       "url": "api-reference"
     }
   ],
+  "versions": ["v2", "v1"],
   "navigation": [
     {
       "group": "Welcome",
       "pages": ["introduction", "understand", "quickstart"]
     },
     {
+      "version": "v1",
       "group": "Guides",
       "pages": [
         "v1/guides/authentication",
@@ -102,6 +104,7 @@
       ]
     },
     {
+      "version": "v2",
       "group": "Concepts",
       "pages": [
         "v2/concepts/search-engines",
@@ -127,6 +130,7 @@
       ]
     },
     {
+      "version": "v2",
       "group": "Developer Communications",
       "pages": [
         "v2/developer-communications/api-changelog",
